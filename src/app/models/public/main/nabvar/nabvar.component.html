@@ -1,0 +1,55 @@
+<div class="header-content">
+  <div class="header-item">
+
+    <div class="header-item-category" nz-dropdown  nzTrigger="click" [nzDropdownMenu]="menu"(nzVisibleChange)="change($event)">
+      <span
+      class="trigger"
+      nz-icon
+      [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+      (click)="isCollapsed = !isCollapsed"
+      ></span>
+      <span>Categorias</span>
+    </div>
+    <nz-dropdown-menu #menu="nzDropdownMenu" >
+      <ul nz-menu>
+        <li nz-menu-item routerLink="productos/bebidas">Bebidas</li>
+        <li nz-menu-item routerLink="productos/almuerzos">Almuerzos</li>
+      </ul>
+    </nz-dropdown-menu>
+    <div class="header-item-logo" routerLink="/">
+      <div class="header-item-icon">
+        <svg-icon src="../../../../../assets/icons/logoWhite.svg" [applyClass]="true"  [svgStyle]="{'width.px':50,'height.px':30,'fill':'#fff'}">
+        </svg-icon>
+      </div>
+      <div class="header-item-title">
+        <span> Restaurante</span>
+      </div>
+    </div>
+  </div>
+  <div class="search">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <input type="text" nz-input placeholder="input search text" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" nzSearch>
+        <span nz-icon nzType="search"></span>
+      </button>
+    </ng-template>
+  </div>
+  <div class="navbar">
+    <ul class="navbar-item">
+      <li routerLink="auth/login">
+        <span nz-icon nzType="login" ></span>
+        Iniciar
+      </li>
+      <li routerLink="auth/registro">
+        <span nz-icon nzType="user-add"></span>
+        Registrarse
+      </li>
+      <li routerLink="shopping">
+        <span nz-icon nzType="shopping-cart" nzTheme="outline" ></span>
+      </li>
+    </ul>
+  </div>
+</div>
+

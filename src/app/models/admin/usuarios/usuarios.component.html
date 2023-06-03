@@ -1,0 +1,139 @@
+<div class="container">
+
+        <div class="title">
+          <h2>Usuarios</h2>
+        </div>
+
+    <div class="content wg-white" style="padding: 20px;">
+
+      <div class="new_compra " style="margin-bottom: 20px;">
+        <button nz-button nzType="primary" class="btn-primary" (click)="showModal()">
+           <span nz-icon nzType="plus" nzTheme="outline"></span> Nuevo</button>
+      </div>
+      <div class="content-datatable wg-white" >
+       <!-- <h3></h3> -->
+       <!-- <nz-divider></nz-divider> -->
+       <nz-divider nzPlain nzText="Lista de usuarios" nzOrientation="left"></nz-divider>
+        <table  datatable class="table display table-bordered table-hover dt-responsive" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  >
+          <thead>
+            <tr style="text-align: center !important;">
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Nombre Usuario</th>
+              <th>Identificacion</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th style=" width: 70px;">Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="text-align: right;" *ngFor="let data of usuarios; index as i">
+              <td >{{data.nombre}}</td>
+              <td>{{data.apellido}}</td>
+              <td>{{data.nombreUsuario}}</td>
+              <td>{{data.identificacion}}</td>
+              <td>{{data.email}}</td>
+              <td >
+                <span *ngFor="let rol of data.roles">
+                    {{rol.nombre}} <br>
+                </span>
+              </td>
+
+              <td style="display: flex;  align-items: center;justify-content: center;">
+                <a (click)="editar(data)"><span style="color: green; font-size: 20px" nz-icon nzType="edit"
+                    nzTheme="outline" nzTooltipTitle="Editar" nzTooltipPlacement="left" nz-tooltip></span></a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="showDeleteConfirm(data.id,data.nombreUsuario)"><span style="color: red; font-size: 20px" nz-icon nzType="delete"
+                    nzTheme="outline" nzTooltipTitle="Eliminar" nzTooltipPlacement="right" nz-tooltip></span></a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div>
+
+        <nz-modal [(nzVisible)]="isVisible"  (nzOnCancel)="handleCancel()"
+        [nzStyle]="{ top: '20px' }"
+        [nzContent]="modalContent" [nzTitle]="modalTitle" [nzFooter]="modalFooter">
+          <ng-template #modalTitle class="header-content">Nuevo Usuario</ng-template>
+          <form nz-form id="formcompra" [formGroup]="usuarioForm"
+            class="ant-advanced-search-form">
+            <ng-template #modalContent>
+                  <nz-form-label [nzSpan]="24" nzRequired nzFor="nombre">Nombre</nz-form-label>
+                  <nz-form-item>
+                    <nz-form-control [nzSpan]="24" nzErrorTip="el nombre es requerido" nzHasFeedback>
+                      <input type="text" nz-input formControlName="nombre" placeholder="ingrese su nombre" />
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-label [nzSpan]="24" nzRequired nzFor="apellido">Apellido</nz-form-label>
+                  <nz-form-item>
+                    <nz-form-control [nzSpan]="24" nzErrorTip="el apellido es requerido" nzHasFeedback>
+                      <input type="text" nz-input formControlName="apellido" placeholder="ingrese el apellido" />
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-label [nzSpan]="24" nzRequired>Nombre usuario</nz-form-label>
+                  <nz-form-item>
+                    <nz-form-control [nzSpan]="24" nzHasFeedback nzErrorTip="el nombre de usuario es requerido">
+                      <input nz-input formControlName="nombreUsuario" placeholder="ingrese nombre usuario" />
+                      <ng-template #userErrorTpl let-control>
+                      </ng-template>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-label [nzSpan]="24" nzRequired>Identificacion</nz-form-label>
+                  <nz-form-item>
+                    <nz-form-control [nzSpan]="24" nzHasFeedback nzErrorTip="el numero de identificacion es requerido">
+                      <input nz-input type="text"  mask="0*" formControlName="identificacion" placeholder="ingrese numero de identificacion" />
+                      <ng-template #userErrorTpl let-control>
+                      </ng-template>
+                    </nz-form-control>
+                  </nz-form-item>
+
+                  <nz-form-label [nzSpan]="24" nzRequired>E-mail</nz-form-label>
+                  <nz-form-item>
+                    <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+                      <input nz-input formControlName="email" placeholder="ingrese email" type="email" />
+                      <ng-template #emailErrorTpl let-control>
+                        <ng-container *ngIf="control.hasError('email')">email no valido!</ng-container>
+                        <ng-container *ngIf="control.hasError('required')">el email es requerido!</ng-container>
+                      </ng-template>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-label [nzSpan]="24"  nzRequired>Rol</nz-form-label>
+                  <nz-form-item>
+                      <nz-form-control [nzSpan]="24"   nzErrorTip="Ingrese el rol" nzHasFeedback>
+                        <nz-select formControlName="roles" nzPlaceHolder="seleccione rol" [nzSize]="size">
+                          <nz-option *ngFor="let option of roles" [nzLabel]="option.nombre" [nzValue]="option.id"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-label *ngIf="!edit"  nzRequired>Contraseña</nz-form-label>
+                  <nz-form-item *ngIf="!edit" >
+                    <nz-form-control  nzHasFeedback nzErrorTip="la contraseña es requerida!">
+                      <input nz-input type="password" formControlName="password" (ngModelChange)="validateConfirmPassword()" />
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-label *ngIf="!edit"   nzRequired>Confirmar Contraseña</nz-form-label>
+                  <nz-form-item *ngIf="!edit" >
+                    <nz-form-control  nzHasFeedback [nzErrorTip]="passwordErrorTpl">
+                      <input nz-input type="password" formControlName="confirm" placeholder="confirm your password" />
+                      <ng-template #passwordErrorTpl let-control>
+                        <ng-container *ngIf="control.hasError('required')">confirmar contraseña es requerida!</ng-container>
+                        <ng-container *ngIf="control.hasError('confirm')">la contraseña no coinciden!</ng-container>
+                      </ng-template>
+                    </nz-form-control>
+                  </nz-form-item>
+            </ng-template>
+            <ng-template #modalFooter>
+              <button class="btn-default" (click)="handleCancel()">Cancelar</button>
+              <button [ngClass]="{'btn-secundary':usuarioForm.valid,'btn-invalid':!usuarioForm.valid}"
+                (click)="handleOk()" [disabled]="!usuarioForm.valid">Guardar</button>
+
+            </ng-template>
+          </form>
+        </nz-modal>
+      </div>
+
+    </div>
+
+  </div>

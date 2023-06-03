@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="container-dashboard">
+    <div class="fondo"></div>
+<div style="padding: 20px;">
+
+  <div class="title" ><h2 >Categorias</h2></div>
+  <nz-card >
+    <form nz-form id="formcompra"  [formGroup]="categoriaForm" (ngSubmit)="handleOk()" class="ant-advanced-search-form">
+      <h3 style="color: gray;">Nueva Categoria</h3>
+      <div nz-row nzGutter="24" >
+        <div nz-col [nzSpan]="12" >
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5"  nzRequired>Nombre</nz-form-label>
+            <nz-form-control   nzErrorTip="Ingrese nombre" nzHasFeedback>
+              <input  nz-input placeholder="placeholder" formControlName="nombre" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8" >
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5"  nzRequired>Estado</nz-form-label>
+            <nz-form-control    nzErrorTip="Ingrese unidad" nzHasFeedback>
+              <nz-select formControlName="estado"  nzPlaceHolder="seleccione estado" [nzSize]="size">
+                <nz-option  [nzLabel]="'Activo'" [nzValue]="true" ></nz-option>
+                <nz-option  [nzLabel]="'Inactivo'" [nzValue]="false"></nz-option>
+
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <nz-form-item>
+          <nz-form-control [nzSpan]="4" >
+            <button [ngClass]="categoriaForm.valid?'btn-secundary':'btn-invalid'"  [disabled]="!categoriaForm.valid" >Guardar</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </form>
+  </nz-card>
+  <div class="content-datatable" style="margin-top: 30px;">
+      <table  class="row-border hover" >
+        <caption>Resultado de Categorias</caption>
+        <thead>
+          <tr>
+            <th style="text-align: center ;" >#</th>
+            <th style="text-align: center ;" >Nombre</th>
+            <th style="text-align: center ;" >Estado</th>
+            <th style="text-align: center ;" >Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let data of dataCategory;index as i ">
+            <td>{{i+1}}</td>
+            <td>{{data.nombre}}</td>
+            <td>
+              <nz-badge *ngIf="!data.estado" [nzColor]="'red'" [nzText]="'Inactivo'"></nz-badge>
+              <nz-badge *ngIf="data.estado" [nzColor]="'green'" [nzText]="'Activo'"></nz-badge>
+            </td>
+            <td style="display: flex; justify-content: center;">
+              <a (click)="editar(data.id)"
+                ><span
+                  style="color: green; font-size: 20px"
+                  nz-icon
+                  nzType="edit"
+                  nzTheme="outline"
+                  nzTooltipTitle="Editar"
+                  nzTooltipPlacement="left"
+                  nz-tooltip
+                ></span
+              ></a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a nz-popconfirm nzPopconfirmTitle="Desea eliminar {{data.nombre}}?" (nzOnConfirm)="eliminar(data.id)"
+                ><span
+                  style="color: red; font-size: 20px"
+                  nz-icon
+                  nzType="delete"
+                  nzTheme="outline"
+                  nzTooltipTitle="Eliminar"
+                  nzTooltipPlacement="right"
+                  nz-tooltip
+                ></span
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+      <div>
+      </div>
+    </div>
+
+  </div>

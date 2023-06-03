@@ -1,0 +1,21 @@
+@import '/src/styles/variables.scss';
+.container{
+  // overflow:scroll;
+  height: 100%;
+  padding: 0%;
+  background-color: white;
+}
+
+.container-dashboard{
+  position: relative;
+  background-color: white !important;
+  // height: 100%;
+  // padding: 20px;
+  // padding-bottom: 10px;
+  // display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+nz-form-label{
+  text-align: left !important;
+}

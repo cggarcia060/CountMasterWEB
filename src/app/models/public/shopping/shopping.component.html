@@ -1,0 +1,70 @@
+<div class="container">
+  <nz-list nzItemLayout="vertical">
+    <nz-list-item *ngFor="let item of data">
+      <nz-list-item-meta>
+        <nz-list-item-meta-title>
+          <a href="{{ item.href }}">{{ item.title }}</a>
+        </nz-list-item-meta-title>
+        <nz-list-item-meta-description>
+          {{ item.description }}
+        </nz-list-item-meta-description>
+      </nz-list-item-meta>
+      {{ item.content }}
+
+      <nz-list-item-extra>
+        <img
+        nz-image
+        width="200px"
+        height="200px"
+        nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        alt=""
+      />
+      </nz-list-item-extra>
+      <br>
+      <br>
+      <label for="">
+        Cantidad:
+      </label>
+      <nz-select [(ngModel)]="singleValue" [nzSize]="size">
+        <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+      </nz-select>
+      <button
+        nz-button
+        nzType="primary"
+        nzDanger
+        [nzLoading]="isLoadingTwo"
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure delete this task?"
+        (nzOnConfirm)="confirm()"
+        (nzOnCancel)="cancel()"
+        nzPopconfirmPlacement="top"
+        nz-button
+      >
+      <span nz-icon nzType="delete" nzTheme="outline"></span>
+        Eliminar
+      </button>
+
+    </nz-list-item>
+  </nz-list>
+<div class="comprar">
+
+  <button
+  nz-button
+  nzType="primary"
+  (click)="loadTwo()"
+  [nzLoading]="isLoadingTwo"
+  >
+  Comprar
+</button>
+
+<button
+nz-button
+nzType="default"
+(click)="loadTwo()"
+[nzLoading]="isLoadingTwo"
+>
+<span nz-icon nzType="clear" nzTheme="outline"></span>
+Limpiar
+</button>
+</div>
+</div>

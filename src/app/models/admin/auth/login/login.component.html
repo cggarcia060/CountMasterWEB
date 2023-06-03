@@ -1,0 +1,45 @@
+<div style="max-width: 100%;height: 100%; " >
+  <div nz-row class="auth_content" style="height: 100%;" >
+    <div nz-col nzSpan="12" class="login_img">
+      <img src="../../../../../assets/images/fondo1_400.jpg" alt="">
+    </div>
+    <div nz-col nzSpan="12" class="auth_content_form">
+      <div class="auth-form">
+
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-control>
+              <h2 class="title_login">INICIAR SESION</h2>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-label  nzRequired>Nombre de usuario</nz-form-label>
+          <nz-form-item >
+          <nz-form-control nzErrorTip="
+          ¡Por favor ingrese su nombre de usuario!">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="nombreUsuario" placeholder="Nombre Usuario"  />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-label  nzRequired>Contraseña</nz-form-label>
+      <nz-form-item >
+        <nz-form-control nzErrorTip="
+        ¡Por favor ingrese su nombre de contraseña!">
+        <nz-input-group nzPrefixIcon="lock">
+          <input type="password" nz-input formControlName="password" placeholder="Contraseña">
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">INICIAR</button>
+    <div nz-row class="login-form-margin">
+      <div nz-col >
+        <a class="login-form-forgot" routerLink="/account/auth_send_email">
+          Olvidé contraseña</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+</div>

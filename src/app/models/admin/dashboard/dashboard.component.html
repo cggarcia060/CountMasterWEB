@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="title"><h2 >Dashboard</h2></div>
+  <div class="container_row">
+    <div class="col_item">
+        <div class="cards_info">
+    <nz-card>
+      <nz-statistic [nzValue]="(1949 | number)!" [nzTitle]="'Cantidad Compras'"></nz-statistic>
+    </nz-card>
+    <nz-card>
+      <nz-statistic [nzValue]="'$' + (1949101 | number)!" [nzTitle]="'Compra Maxima'"></nz-statistic>
+    </nz-card>
+    <nz-card>
+      <nz-statistic [nzValue]="'$' + (19491 | number)!" [nzTitle]="'Promedio Compras'"></nz-statistic>
+    </nz-card>
+    <nz-card>
+      <nz-statistic [nzValue]="(9.3 | number : '1.0-2')!" [nzTitle]="'% Compras diaria'" [nzPrefix]="prefixTplTwo"
+        [nzSuffix]="'%'" [nzValueStyle]="{ color: '#CF1322' }"></nz-statistic>
+      <ng-template #prefixTplTwo><span nz-icon nzType="arrow-down"></span></ng-template>
+    </nz-card>
+        </div>
+
+      <div class="echarts wg-white" >
+    <div echarts [options]="options" [loading]="isLoading" theme="macarons" class="demo-chart"></div>
+      </div>
+    </div>
+
+      <div class="container_chart" >
+        <div echarts [options]="option"  class="demo-chart wg-white"></div>
+    <div class="chart wg-white">
+      <echarts [initOpts]="initOpts"  [options]="optiones" style="height: 100%;"></echarts>
+    </div>
+      </div>
+  </div>
+
+<nz-footer style="text-align: center">CGSOFT ©2023 version 1.0</nz-footer>
+</div>

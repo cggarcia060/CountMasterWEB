@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="container-dashboard">
+    <div class="title" ><h2 style="color: gray;">Compras</h2></div>
+    <nz-card>
+    <form nz-form id="formcompra"  [formGroup]="productForm" (ngSubmit)="handleOk()" class="ant-advanced-search-form">
+      <h3 style="color: gray;">Nueva Categoria</h3>
+      <div nz-row nzGutter="24" >
+        <div nz-col [nzSpan]="12" >
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5"  nzRequired>Nombre</nz-form-label>
+            <nz-form-control   nzErrorTip="Ingrese nombre" nzHasFeedback>
+              <input  nz-input placeholder="placeholder" formControlName="nombre" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8" >
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5"  nzRequired>Estado</nz-form-label>
+            <nz-form-control    nzErrorTip="Ingrese unidad" nzHasFeedback>
+              <nz-select formControlName="estado"  nzPlaceHolder="seleccione estado" [nzSize]="size">
+                <nz-option  [nzLabel]="'Activo'" [nzValue]="0" ></nz-option>
+                <nz-option  [nzLabel]="'Inactivo'" [nzValue]="1"></nz-option>
+
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <nz-form-item>
+          <nz-form-control [nzSpan]="4" >
+          <button [ngClass]="{'btn-secundary':productForm.valid,'btn-invalid':!productForm.valid}" (click)="handleOk()" [disabled]="!productForm.valid" >Guardar</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </form>
+   </nz-card>
+   <div class="content-datatable" style="margin-top: 30px;">
+      <table datatable  class="row-border hover">
+        <caption>Resultados del productos </caption>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Foo</td>
+            <td><nz-badge [nzColor]="'red'" [nzText]="'Finished'"></nz-badge></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Someone</td>
+              <td><nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Iamout</td>
+              <td><nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Yoda</td>
+              <td><nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge></td>
+
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Patrick</td>
+              <td><nz-badge [nzStatus]="'danger'" [nzText]="'Finished'"></nz-badge></td>
+
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Barack</td>
+              <td><nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge></td>
+
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>François</td>
+              <td><nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge></td>
+
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Michel</td>
+              <td><nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge></td>
+
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>Chuck</td>
+              <td><nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge></td>
+
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>Simon</td>
+              <td><nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge></td>
+
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>Louis</td>
+              <td><nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge></td>
+
+
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>Zelda</td>
+              <td><nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge></td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  <div>
+  </div>
+</div>

@@ -1,0 +1,321 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import "./styles/variables.scss";
+// @import "~ng-zorro-antd/ng-zorro-antd.min.css";
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+html {
+  box-sizing: border-box;
+  min-height: 100%;
+  font-size: 62.5%;
+}
+
+body {
+  min-height: 100%;
+  font-size: 1.6rem;
+  padding: 0%;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background-color: $secundary;
+}
+
+body::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: red;        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color:rgb(134, 134, 134);    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid  $primary-light-color6;  /* creates padding around scroll thumb */
+}
+div,ul,li,nav,a{
+  margin: 0%;
+  padding: 0%;
+  display: block;
+}
+
+
+.btn-secundary{
+  background-color: $button-primary2;
+  border: 1px solid $button-primary2;
+  color: #fff;
+  border-radius: 3px;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+
+.btn-primary{
+  background-color: $button-primary;
+  border: 1px solid $button-primary;
+  color: #fff;
+  border-radius: 3px;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+.btn-invalid {
+  color: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: #f5f5f5;
+  text-shadow: none;
+  box-shadow: none;
+  padding: 3px 5px;
+  border-radius: 3px;
+  cursor:  not-allowed;
+}
+
+.btn-default{
+  background-color:white ;
+  border: 1px solid #3736367d;
+  color: #000000d9;
+  border-radius: 3px;
+  padding: 3px 5px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+
+
+
+.btn-primary:hover{
+  background-color: $button-primary-light;
+}
+.datatable-two{
+  .ant-table-thead > tr > th {
+    background: $primary;
+    color: white;
+  }
+  [ant-table-thead]::ng-deep > tr  {
+    background-color: aqua !important;
+  }
+}
+.dataTables_scrollHeadInner{
+  // width: 100% !important;
+}
+.table{
+    min-width: 99.6% !important;
+    margin: 0%;
+    padding: 0%;
+    border: none !important;
+    // table-layout: fixed;
+
+  // width: 100% !important;
+}
+.dataTables_scroll{
+  box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.114), 0 2px 3px 1px #00000014, 0 2px 4px 1px #00000011;
+  font-size: 14px !important;
+  margin-top: 5px !important;
+  // width: 99%;
+
+}
+.content-datatable{
+  width: 100%;
+  // overflow-x: auto;
+  // position: relative;
+  // padding: 1rem;
+  // padding: 20px;
+  // height: 300px !important;
+  table{
+    // width: 100%;
+    // table-layout: fixed;
+    // overflow-x: auto !important;
+    thead{
+      // margin: 5px;
+      th{
+        font-weight: 500;
+        padding:  .9rem .1rem;
+        // padding:  0 !important;
+        font-size: 12px;
+        color: #0000008a;
+        // padding: 5px 3px !important;
+        text-align: left !important;
+        border-bottom: 1px solid rgba(0,0,0,.12) !important;
+      }
+      // background: $primary;
+      // color: white;
+  border: none !important;
+    }
+    tbody{
+      border: none !important;
+        td{
+          text-align: left;
+          padding: 0.9rem 1.2rem;
+          vertical-align: top;
+          border-top: 0;
+          color: #000000de;
+          transition: width .3s ease;
+          font-size: 14px;
+          font-weight: 400;
+          //   border: none !important;
+        //   // border: 1px solid $secundary;
+        //   padding: 3px !important;
+        }
+        // border: 1px solid  #f0f2f5 !important;
+table{
+  margin: 15px 0 !important;
+
+}
+    }
+  }
+  tfoot{
+    border: none !important;
+  }
+}
+
+table.dataTable thead th{
+  font-weight: 500 !important;
+
+}
+.dataTables_scrollBody{
+  table{
+    width: auto !important;
+  }
+}
+.dataTables_filter {
+  color: gray !important;
+  margin-bottom: 10px !important;
+
+  input {
+    border-color: solid 1px gray;
+  }
+
+  input:focus-visible {
+    outline: none;
+    border-color: gray;
+  }
+}
+.dataTables_wrapper{
+  // overflow-x: scroll;
+}
+.dataTables_wrapper .dataTables_filter input{
+  margin-bottom: 5px !important;
+}
+.dataTables_length {
+  // color: $info-color !important;
+  margin-bottom: 20px !important;
+  margin-left: 15px;
+}
+.cards_info nz-card{
+width: 250px !important;
+}
+
+.dataTables_paginate {
+  // border: 1px solid gray !important;
+  padding: 3px !important;
+  border-radius: 6px;
+  margin-top: 7px;
+  a{
+    padding: 2px !important;
+  }
+}
+.ant-card-body{
+  padding: 10px !important;
+}
+
+
+.ant-modal-header {
+  background: $primary !important;
+
+}
+// .ant-modal {
+//   top: 50px !important
+// }
+.ant-modal-title,.ant-modal-close-x {
+  color: white !important;
+
+}
+.fondo{
+  position: absolute;
+  background: $primary-ligth;
+  width: 100%;
+  height: 500px;
+  clip-path: polygon(0 0, 100% 0%, 100% 8%, 0 18%);
+  // background-color: white;
+  // overflow-x: hidden;
+}
+.title{
+  position: relative;
+  display: flex;
+  width: 100%;
+  // padding-left: 10px;
+  margin: 0%;
+  padding: 5px;
+  h2{
+    margin: 0%;
+    color: $primary !important;
+  }
+  // z-index: 100;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: $primary;
+  text-shadow: 0 0 0.25px currentcolor;
+}
+.ant-tabs-ink-bar {
+  position: absolute;
+  background: $primary;
+  pointer-events: none;
+}
+.ant-table-tbody > tr.ant-table-placeholder {
+  text-align: center;
+  display: none;
+}
+.ant-input[disabled] {
+  color: rgba(0, 0, 0, 0.70) !important
+}
+
+.wg-white{
+  background: white !important;
+}
+
+.dark{
+  // background: #1e1e1e;
+  background: #252526 !important;
+  color: white !important;
+}
+
+.dark-1{
+  background: #252526 !important;
+  border: #252526 !important;
+  color: white !important;
+}
+.light-logo{
+  background-color: rgb(240, 240, 240) !important;
+}
+
+.dark-ligth{
+ background-color:  #3e3e42;
+}
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  color: $primary !important;
+}
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn:hover{
+  color: $primary !important;
+}
+.ant-table-column-sorters::after,.ant-table-container  {
+  box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.114), 0 2px 3px 1px #00000014, 0 2px 4px 1px #00000011;
+}
+.ant-table-thead th.ant-table-column-has-sorters {
+  padding: 10px;
+  outline: 0;
+  cursor: pointer;
+  transition: all .3s;
+}
+.odd-row {
+  background-color: #f5f5f574; /* Color de fila gris */
+}
+
+.even-row {
+  background-color: #fff; /* Color de fila blanca */
+}
+.content-datatable table tbody td {
+  padding: 8px 12px !important;
+}

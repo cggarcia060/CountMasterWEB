@@ -1,0 +1,60 @@
+@import '/src/styles/variables.scss';
+.container{
+  // overflow:scroll;
+  height: 100%;
+  padding: 0%;
+  // background-color: white;
+}
+.content{
+
+  padding: 0 20px;
+}
+.container-dashboard{
+  position: relative;
+  background-color: white !important;
+  // height: 100%;
+  padding-bottom: 10px;
+  // display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.cards_info{
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  nz-card{
+    box-shadow: 3px 3px 3px rgba($color: #000000, $alpha: 0.5);
+
+    width: 15% !important;
+    border-left: 5px solid $button-primary;
+    border-radius: 5px;
+    // margin-left: 10px;
+    // padding: 10px !important;
+    p{
+      margin: 0%;
+      padding: 0%;
+    }
+  }
+
+
+
+}
+
+.new_compra{
+  button{
+    box-shadow: 3px 3px 3px rgba($color: #000000, $alpha: 0.5);
+  }
+  button:hover{
+    background: $button-primary-light2;
+    transition: 0.5s all ease-in-out;
+  }
+}
+
+nz-form-label{
+  text-align: left !important;
+}
+
+.save {
+  margin-right: 8px;
+}

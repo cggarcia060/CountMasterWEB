@@ -1,0 +1,31 @@
+<div class="card-auth">
+  <div class="header-card">
+    <div class="header-title">
+      <span style="color: white;">Enviar email</span>
+    </div>
+    <div class="header-content">
+      <svg-icon src="../../../../../assets/icons/logo.svg" [applyClass]="true"  [svgStyle]="{'width.px':60,'fill':'#fff'}">
+      </svg-icon>
+      <span style="color: white;">Restaurante</span>
+    </div>
+  </div>
+  <form nz-form [formGroup]="sendForm" class="login-form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <label >Ingrese su email para enviar restaurar su contraseña.</label>
+
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label  nzRequired>E-mail</nz-form-label>
+      <nz-form-control [nzSpan]="20" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+        <input nz-input formControlName="email" placeholder="email" type="email" />
+        <ng-template #emailErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('email')">The input is not valid E-mail!</ng-container>
+          <ng-container *ngIf="control.hasError('required')">Please input your E-mail!</ng-container>
+        </ng-template>
+      </nz-form-control>
+      <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" routerLink="/account/auth_restablecer_password">Enviar</button>
+    </nz-form-item>
+
+</form>
+
+</div>

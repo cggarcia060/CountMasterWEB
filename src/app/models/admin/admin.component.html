@@ -1,0 +1,65 @@
+<nz-layout  style="display: flex;justify-content: space-between;height: auto; height: 100vh;" >
+  <nz-sider nzWidth="200px" class="fixed_nav "  nzCollapsible [ngClass]="theme?'dark':'light'" [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <div  [ngClass]="{'logo':!isCollapsed,'logoNoSidebar':isCollapsed,'light-logo':!theme,'dark-ligth':theme}">
+    <span>
+      logo
+    </span>
+  </div>
+    <ul nz-menu  nzMode="inline" style="margin-top: 20px;" [ngClass]="theme?'dark-1':'light'" >
+      <div *ngIf="!isCollapsed">
+      <li  class="item " nz-menu-item routerLink={{data.key}} [ngClass]="{'selected':path===data.key}" (click)="isSelected(data.key)" *ngFor="let data of component" >
+        <span  nz-icon nzType={{data.logo}} nzTheme="outline"></span>
+        <span >{{data.name}}</span>
+      </li>
+      </div>
+      <div *ngIf="isCollapsed">
+        <li class="item " nz-menu-item routerLink={{data.key}} [ngClass]="{'selected':path===data.key}" (click)="isSelected(data.key)" *ngFor="let data of component" nzTooltipTitle={{data.name}} nzTooltipPlacement="right"  nz-tooltip>
+          <span  nz-icon style="font-size: 17px;" nzType={{data.logo}} nzTheme="outline"  >
+          </span>
+        </li>
+      </div>
+
+    </ul>
+
+  </nz-sider>
+  <!--   -->
+  <nz-layout  [ngClass]="{'right-layout':!isCollapsed,'right-layout-collapse':isCollapsed }" >
+    <nz-header [ngClass]="theme?'dark':'light'">
+
+      <span
+        class="trigger"
+        nz-icon
+        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="collapsed()"
+      ></span>
+      <div class="navbar">
+        <div style="margin-right: 20px;">
+          modo <nz-switch nzSize="small" [(ngModel)]="theme"></nz-switch>
+        </div>
+
+        <div class="navbar" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+          <nz-avatar nzText={{usernameInicial}} style="color:#f56a00; background-color:#fde3cf;"> </nz-avatar>
+          <span>
+            {{username}}
+          </span>
+          <span nz-icon nzType="down"></span>
+        </div>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item><span nz-icon nzType="user" nzTheme="outline" style="margin-right: 10px;"></span> Perfil</li>
+            <li nz-menu-item (click)="logout()"><span nz-icon nzType="logout" nzTheme="outline" style="margin-right: 10px;"></span> Salir</li>
+            <li nz-menu-divider></li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+
+    </nz-header>
+    <nz-content [ngClass]="theme?'dark-ligth':'ligth-fondo'" >
+
+      <div class="inner-content">
+
+        <router-outlet></router-outlet>
+        </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

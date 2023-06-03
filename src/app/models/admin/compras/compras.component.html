@@ -1,0 +1,232 @@
+<div class="container">
+  <div class="container-dashboard">
+    <div class="fondo">
+    </div>
+     <div class="content">
+
+       <div class="title"><h2>Compras</h2></div>
+       <div class="cards_info">
+         <nz-card >
+          <nz-statistic [nzValue]="'$'+(totalCompras | number)!" [nzTitle]="'Total Compras'"></nz-statistic>
+        </nz-card>
+  <nz-card >
+    <nz-statistic [nzValue]="(cantidadCompras | number)!" [nzTitle]="'Cantidad Compras'"></nz-statistic>
+  </nz-card>
+  <nz-card >
+    <nz-statistic [nzValue]="'$'+(compraMaxima | number)!" [nzTitle]="'Compra Maxima '"></nz-statistic>
+  </nz-card>
+  <nz-card >
+    <nz-statistic [nzValue]="'$'+(compraHoy | number)!" [nzTitle]="'Compra Hoy'"></nz-statistic>
+  </nz-card>
+  <nz-card >
+    <nz-statistic [nzValue]="'$'+(promedioCompra | number)!" [nzTitle]="'Promedio Compras'"></nz-statistic>
+  </nz-card>
+  <nz-card >
+    <nz-statistic *ngIf="porcentaje>100"
+    [nzValue]="(porcentaje-100 | number: '1.0-2')!"
+    [nzTitle]="'% Compras diaria'"
+    [nzPrefix]="prefixTplTwo"
+    [nzSuffix]="'%'"
+    [nzValueStyle]="{ color: '#CF1322' }"
+    ></nz-statistic>
+    <nz-statistic *ngIf="porcentaje<100"
+    [nzValue]="(100-porcentaje | number: '1.0-2')!"
+    [nzTitle]="'% Compras diaria'"
+    [nzPrefix]="prefixTplTwo"
+    [nzSuffix]="'%'"
+    [nzValueStyle]="{ color: '#008000' }"
+    ></nz-statistic>
+    <ng-template #prefixTplTwo><span nz-icon nzType="arrow-down"></span></ng-template>
+  </nz-card>
+</div>
+<div class="new_compra" style="margin-bottom: 20px;" >
+  <button nz-button nzType="primary" class="btn-primary" (click)="showModal()">Nueva Compra</button>
+</div>
+<div class="content-datatable">
+
+    <table  class="row-border hover" *ngIf="compras.length>0">
+      <caption>lista compras</caption>
+      <thead>
+        <tr style="text-align: center !important;">
+          <th>#</th>
+          <th style="width: 140px;">Fecha</th>
+          <th>Nombre</th>
+          <th>Marca</th>
+          <th>Unidad</th>
+          <th>Presentacion</th>
+          <th>Cantidad</th>
+          <th>valor</th>
+          <th>Proveedor</th>
+          <th>Descripcion</th>
+          <th>Total</th>
+          <th style=" width: 70px;">Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="text-align: right;" *ngFor="let data of compras; index as i">
+          <td>{{i+1}}</td>
+          <td>{{data.fecha |date:'dd/MM/yyyy hh:mm a '}}</td>
+          <td>{{data.nombre}}</td>
+          <td>{{data.marca}}</td>
+          <td>{{data.unidad.nombre}}</td>
+          <td>{{data.peso}}</td>
+          <td>{{data.cantidad}}</td>
+          <td>{{data.valor}}</td>
+          <td>{{data.proveedores?data.proveedores.nombre_empresa:''}}</td>
+          <td>{{data.descripcion}}</td>
+          <td>{{data.total}}</td>
+          <td style="display: flex; width: 70px; align-items: center;justify-content: center;">
+              <a (click)="editar(data.id)"
+                ><span
+                  style="color: green; font-size: 20px"
+                  nz-icon
+                  nzType="edit"
+                  nzTheme="outline"
+                  nzTooltipTitle="Editar"
+                  nzTooltipPlacement="left"
+                  nz-tooltip
+                ></span
+              ></a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a (click)="eliminar(data.id)"
+                ><span
+                  style="color: red; font-size: 20px"
+                  nz-icon
+                  nzType="delete"
+                  nzTheme="outline"
+                  nzTooltipTitle="Eliminar"
+                  nzTooltipPlacement="right"
+                  nz-tooltip
+                ></span
+              ></a>
+           </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+<div>
+
+    <nz-modal
+    [(nzVisible)]="isVisible"
+    (nzOnCancel)="handleCancel()"
+    [nzContent]="modalContent"
+    [nzTitle]="modalTitle"
+    nzWidth="70%"
+    [nzFooter]="modalFooter"
+    >
+    <ng-template #modalTitle class="header-content">Nueva Compra</ng-template>
+    <form nz-form id="formcompra"  [formGroup]="comprasForm" class="ant-advanced-search-form">
+      <ng-template #modalContent>
+        <div nz-row nzGutter="24" >
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8"  nzRequired>Nombre</nz-form-label>
+              <nz-form-control [nzSpan]="16"  nzErrorTip="Ingrese nombre" nzHasFeedback>
+                <input  nz-input placeholder="Ingrese nombre" formControlName="nombre" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8" >Marca</nz-form-label>
+              <nz-form-control [nzSpan]="16" nzHasFeedback>
+                <input  nz-input placeholder="Ingrese unidad" formControlName="marca" />
+              </nz-form-control>
+
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8"  nzRequired>Unidad</nz-form-label>
+              <nz-form-control [nzSpan]="16"   nzErrorTip="Ingrese unidad" nzHasFeedback>
+                <nz-select formControlName="unidad"  [(ngModel)]="unid" (ngModelChange)="getUnd($event)"   nzPlaceHolder="seleccione unidad" [nzSize]="size">
+                  <nz-option *ngFor="let option of unidades" [nzLabel]="option.nombre" [nzValue]="option.id"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row nzGutter="24">
+          <div nz-col [nzSpan]="8" *ngIf="presentacion!=undefined">
+            <nz-form-item >
+              <nz-form-label  [nzSpan]="8" nzRequired>{{presentacion.nombre}}</nz-form-label>
+              <nz-form-control [nzSpan]="16"  nzErrorTip="Ingrese peso" nzHasFeedback>
+                <input type="text"  nz-input placeholder="ingrese la prensentacion" formControlName="peso" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8" nzRequired>fecha</nz-form-label>
+              <nz-form-control [nzSpan]="16"  nzErrorTip="Ingrese fecha" nzHasFeedback>
+                <nz-date-picker formControlName="fecha" (ngModelChange)="onChange($event)"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired>cantidad</nz-form-label>
+              <nz-form-control [nzSpan]="16"    nzErrorTip="Ingrese cantidad" nzHasFeedback>
+                <input type="number"  nz-input (ngModelChange)="onChangeCantidad($event)" placeholder="Ingrese cantidad"    formControlName="cantidad" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row nzGutter="24"  >
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item>
+              <nz-form-label *ngIf="true" [nzSpan]="8" nzRequired>valor unidad</nz-form-label>
+              <nz-form-control [nzSpan]="16"   nzErrorTip="Ingrese valor" nzHasFeedback>
+                <input type="number"  nz-input  (ngModelChange)="onChangeValor($event)" placeholder="Ingrese valor" formControlName="valor" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item>
+              <nz-form-label  [nzSpan]="8" >Proveedor</nz-form-label>
+              <nz-form-control [nzSpan]="16"  nzErrorTip="Ingrese proveedor" nzHasFeedback>
+                <nz-select formControlName="proveedor" nzPlaceHolder="seleccione proveedor" [nzSize]="size">
+                  <nz-option *ngFor="let option of proveedores" [nzLabel]="option.nombre_empresa" [nzValue]="option.id"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8" >Total</nz-form-label>
+              <nz-form-control [nzSpan]="16"  nzHasFeedback>
+                <input type="text"  nz-input placeholder="total"  formControlName="total" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+        </div>
+        <div nz-row nzGutter="12"  >
+          <div nz-col [nzSpan]="12" >
+            <nz-form-item>
+              <nz-form-label *ngIf="true" [nzSpan]="6">Descripcion</nz-form-label>
+              <nz-form-control [nzSpan]="18"  nzHasFeedback>
+                <textarea  nz-input placeholder="placeholder" formControlName="descripcion" ></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+        </div>
+      </ng-template>
+      <ng-template #modalFooter>
+
+        <button class="btn-default" (click)="handleCancel()">Cancelar</button>
+        <button [ngClass]="comprasForm.valid?'btn-secundary':'btn-invalid'" (click)="handleOk()" [disabled]="!comprasForm.valid" >Guardar</button>
+      </ng-template>
+    </form>
+  </nz-modal>
+
+
+</div>
+
+</div>
+
+</div>

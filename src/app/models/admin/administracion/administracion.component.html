@@ -1,0 +1,425 @@
+<div class="container">
+
+  <div class="title">
+    <h2>Administracion</h2>
+  </div>
+  <nz-tabset nzType="editable-card" nzHideAdd  style="background-color: white !important;" >
+    <nz-tab nzTitle="Usuarios" style="color: #028ba2 !important;" >
+      <div class="content wg-white" style="padding: 20px;">
+
+        <div class="new_compra " style="margin-bottom: 20px;">
+          <button nz-button nzType="primary" class="btn-primary" (click)="showModal()">
+             <span nz-icon nzType="plus" nzTheme="outline"></span> Nuevo</button>
+        </div>
+        <div class="content-datatable wg-white" >
+         <nz-divider nzPlain nzText="Lista de usuarios" nzOrientation="left"></nz-divider>
+          <table  datatable class="table display table-bordered table-hover dt-responsive" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  >
+            <thead>
+              <tr style="text-align: center !important;">
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Nombre Usuario</th>
+                <th>Identificacion</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Procesos</th>
+                <th style=" width: 70px;">Accion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="text-align: right;" *ngFor="let data of usuarios; index as i">
+                <td >{{data.nombre}}</td>
+                <td>{{data.apellido}}</td>
+                <td>{{data.nombreUsuario}}</td>
+                <td>{{data.identificacion}}</td>
+                <td>{{data.email}}</td>
+                <td >
+                  <span *ngFor="let rol of data.roles">
+                      {{rol.nombre}} <br>
+                  </span>
+                </td>
+                <td >
+                  <span *ngFor="let proceso of data.procesos">
+                      {{proceso.nombre}} <br>
+                  </span>
+                </td>
+                <td >
+                  <div  style="display: grid;grid-template-columns: 1fr 1fr 1fr;">
+                    <a (click)="editar(data)">
+                      <span style="color: green; font-size: 20px" nz-icon nzType="edit"
+                      nzTheme="outline" nzTooltipTitle="Editar" nzTooltipPlacement="left" nz-tooltip></span></a>
+                      <nz-divider nzType="vertical"></nz-divider>
+                      <a (click)="showDeleteConfirm(data.id,data.nombreUsuario)"><span style="color: red; font-size: 20px" nz-icon nzType="delete"
+                        nzTheme="outline" nzTooltipTitle="Eliminar" nzTooltipPlacement="right" nz-tooltip></span></a>
+                    </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div>
+
+          <nz-modal [(nzVisible)]="isVisible"  (nzOnCancel)="handleCancel()"
+          [nzStyle]="{ top: '20px' }"
+          [nzContent]="modalContent" [nzTitle]="modalTitle" [nzFooter]="modalFooter">
+            <ng-template #modalTitle class="header-content">Nuevo Usuario</ng-template>
+            <form nz-form id="formcompra" [formGroup]="usuarioForm"
+              class="ant-advanced-search-form">
+              <ng-template #modalContent>
+                    <nz-form-label [nzSpan]="24" nzRequired nzFor="nombre">Nombre</nz-form-label>
+                    <nz-form-item>
+                      <nz-form-control [nzSpan]="24" nzErrorTip="el nombre es requerido" nzHasFeedback>
+                        <input type="text" nz-input formControlName="nombre" placeholder="ingrese su nombre" />
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzRequired nzFor="apellido">Apellido</nz-form-label>
+                    <nz-form-item>
+                      <nz-form-control [nzSpan]="24" nzErrorTip="el apellido es requerido" nzHasFeedback>
+                        <input type="text" nz-input formControlName="apellido" placeholder="ingrese el apellido" />
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzRequired>Nombre usuario</nz-form-label>
+                    <nz-form-item>
+                      <nz-form-control [nzSpan]="24" nzHasFeedback nzErrorTip="el nombre de usuario es requerido">
+                        <input nz-input formControlName="nombreUsuario" placeholder="ingrese nombre usuario" />
+                        <ng-template #userErrorTpl let-control>
+                        </ng-template>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzRequired>Identificacion</nz-form-label>
+                    <nz-form-item>
+                      <nz-form-control [nzSpan]="24" nzHasFeedback nzErrorTip="el numero de identificacion es requerido">
+                        <input nz-input type="text"  mask="0*" formControlName="identificacion" placeholder="ingrese numero de identificacion" />
+                        <ng-template #userErrorTpl let-control>
+                        </ng-template>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-label [nzSpan]="24" nzRequired>E-mail</nz-form-label>
+                    <nz-form-item>
+                      <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+                        <input nz-input formControlName="email" placeholder="ingrese email" type="email" />
+                        <ng-template #emailErrorTpl let-control>
+                          <ng-container *ngIf="control.hasError('email')">email no valido!</ng-container>
+                          <ng-container *ngIf="control.hasError('required')">el email es requerido!</ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-label [nzSpan]="24"  nzRequired>Procesos</nz-form-label>
+                    <nz-form-item>
+                      <nz-form-control [nzSpan]="24"   nzErrorTip="Ingrese el rol" nzHasFeedback>
+                          <nz-select nzMode="multiple" nzPlaceHolder="Inserted are removed"
+                          formControlName="procesos">
+                          <nz-option
+                          *ngFor="let option of listProcess"
+                              [nzLabel]="option.nombre"
+                              [nzValue]="option.id"
+
+                              [nzHide]="!isNotSelected(option.id)"
+                              ></nz-option>
+                            </nz-select>
+                          </nz-form-control>
+                        </nz-form-item>
+
+                    <nz-form-label [nzSpan]="24"  nzRequired>Rol</nz-form-label>
+                    <nz-form-item>
+                        <nz-form-control [nzSpan]="24"   nzErrorTip="Ingrese el rol" nzHasFeedback>
+                          <nz-select formControlName="roles" nzPlaceHolder="seleccione rol" [nzSize]="size">
+                            <nz-option *ngFor="let option of listRoles" [nzLabel]="option.nombre" [nzValue]="option.id"></nz-option>
+                          </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-label *ngIf="!edit"  nzRequired>Contraseña</nz-form-label>
+                    <nz-form-item *ngIf="!edit" >
+                      <nz-form-control  nzHasFeedback nzErrorTip="la contraseña es requerida!">
+                        <input nz-input type="password" formControlName="password" (ngModelChange)="validateConfirmPassword()" />
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-label *ngIf="!edit"   nzRequired>Confirmar Contraseña</nz-form-label>
+                    <nz-form-item *ngIf="!edit" >
+                      <nz-form-control  nzHasFeedback [nzErrorTip]="passwordErrorTpl">
+                        <input nz-input type="password" formControlName="confirm" placeholder="confirm your password" />
+                        <ng-template #passwordErrorTpl let-control>
+                          <ng-container *ngIf="control.hasError('required')">confirmar contraseña es requerida!</ng-container>
+                          <ng-container *ngIf="control.hasError('confirm')">la contraseña no coinciden!</ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </nz-form-item>
+              </ng-template>
+              <ng-template #modalFooter>
+                <button class="btn-default" (click)="handleCancel()">Cancelar</button>
+                <button [ngClass]="{'btn-secundary':usuarioForm.valid,'btn-invalid':!usuarioForm.valid}"
+                  (click)="handleOk()" [disabled]="!usuarioForm.valid">Guardar</button>
+
+              </ng-template>
+            </form>
+          </nz-modal>
+        </div>
+
+        </div>
+
+    </nz-tab>
+    <nz-tab nzTitle="Proceso">
+      <div class="content wg-white" style="padding: 20px;">
+
+        <div class="new_compra " style="margin-bottom: 20px;">
+          <button nz-button nzType="primary" class="btn-primary" (click)="showModal2()">
+             <span nz-icon nzType="plus" nzTheme="outline"></span> Nuevo</button>
+        </div>
+        <div class="content-datatable wg-white" >
+         <nz-divider nzPlain nzText="Lista de procesos" nzOrientation="left"></nz-divider>
+          <nz-table #sortTable [nzData]="listProcess" nzTableLayout="fixed" class="display"
+          >
+            <thead>
+              <th *ngFor="let column of listOfColumn" [nzSortFn]="column.compare" [nzSortPriority]="column.priority">
+                {{ column.title }}
+              </th>
+              <th nzWidth="100px">
+                Accion
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of sortTable.data; index as i" [ngClass]="{ 'odd-row': i % 2 === 0, 'even-row': i % 2 !== 0 }">
+                <td>{{ data.id }}</td>
+                <td>{{ data.codigo }}</td>
+                <td>{{ data.nombre }}</td>
+                <td >
+                  <div  style="display:flex;justify-content: center;align-items: center;">
+                  <div  style="display: grid;grid-template-columns: 1fr 1fr 1fr;width: 100px ;">
+
+                    <a (click)="editarProceso(data)">
+                      <span style="color: green; font-size: 20px" nz-icon nzType="edit"
+                      nzTheme="outline" nzTooltipTitle="Editar" nzTooltipPlacement="left" nz-tooltip></span></a>
+                      <nz-divider nzType="vertical"></nz-divider>
+                      <a (click)="showDeleteConfirmProceso(data.id,data.nombre)"><span style="color: red; font-size: 20px" nz-icon nzType="delete"
+                        nzTheme="outline" nzTooltipTitle="Eliminar" nzTooltipPlacement="right" nz-tooltip></span></a>
+                  </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+        <div>
+          <nz-modal [(nzVisible)]="isVisibleProcess"  (nzOnCancel)="handleCancel()"
+          [nzStyle]="{ top: '20px' }"
+          [nzContent]="modalContent2" [nzTitle]="modalTitle2" [nzFooter]="modalFooter2">
+            <ng-template #modalTitle2 class="header-content">Nuevo Proceso</ng-template>
+            <form nz-form id="formcompra" [formGroup]="processForm"
+              class="ant-advanced-search-form">
+              <ng-template #modalContent2>
+                    <nz-form-label [nzSpan]="24" nzRequired nzFor="codigo">Codigo</nz-form-label>
+                    <nz-form-item>
+                      <nz-form-control [nzSpan]="24" nzErrorTip="el codigo es requerido" nzHasFeedback>
+                        <input type="text" nz-input formControlName="codigo" placeholder="ingrese el apellido" />
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzRequired nzFor="nombre">Nombre</nz-form-label>
+                    <nz-form-item>
+                      <nz-form-control [nzSpan]="24" nzErrorTip="el nombre es requerido" nzHasFeedback>
+                        <input type="text" nz-input formControlName="nombre" placeholder="ingrese su nombre" />
+                      </nz-form-control>
+                    </nz-form-item>
+
+              </ng-template>
+              <ng-template #modalFooter2>
+                <button class="btn-default" (click)="handleCancel()">Cancelar</button>
+                <button [ngClass]="{'btn-secundary':processForm.valid,'btn-invalid':!processForm.valid}"
+                  (click)="handleOkProcess()" [disabled]="!processForm.valid">Guardar</button>
+
+              </ng-template>
+            </form>
+          </nz-modal>
+        </div>
+        </div>
+    </nz-tab>
+    <nz-tab nzTitle="Roles">
+      <div class="content wg-white" style="padding: 20px;">
+        <div class="new_compra " style="margin-bottom: 20px;">
+          <button nz-button nzType="primary" class="btn-primary" (click)="showModal3()">
+             <span nz-icon nzType="plus" nzTheme="outline"></span> Nuevo</button>
+        </div>
+        <div class="content-datatable wg-white" >
+         <nz-divider nzPlain nzText="Lista de roles" nzOrientation="left"></nz-divider>
+          <nz-table #sortTable1 [nzData]="listRoles" nzTableLayout="fixed" class="display"
+          >
+            <thead>
+              <th *ngFor="let column of listOfColumnRoles" [nzSortFn]="column.compare" [nzSortPriority]="column.priority">
+                {{ column.title }}
+              </th>
+              <th nzWidth="100px">
+                Accion
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of sortTable1.data; index as i" [ngClass]="{ 'odd-row': i % 2 === 0, 'even-row': i % 2 !== 0 }">
+                <td>{{ data.id }}</td>
+                <td>{{ data.rolNombre}}</td>
+                <td>{{ data.nombre }}</td>
+                <td >
+                  <div  style="display:flex;justify-content: center;align-items: center;">
+                  <div  style="display: grid;grid-template-columns: 1fr 1fr 1fr;width: 100px ;">
+
+                    <a (click)="editarRol(data)">
+                      <span style="color: green; font-size: 20px" nz-icon nzType="edit"
+                      nzTheme="outline" nzTooltipTitle="Editar" nzTooltipPlacement="left" nz-tooltip></span></a>
+                      <nz-divider nzType="vertical"></nz-divider>
+                      <a (click)="showDeleteConfirmRol(data.id,data.nombre)"><span style="color: red; font-size: 20px" nz-icon nzType="delete"
+                        nzTheme="outline" nzTooltipTitle="Eliminar" nzTooltipPlacement="right" nz-tooltip></span></a>
+                  </div>
+                      </div>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+        <div>
+
+          <nz-modal [(nzVisible)]="isVisibleRoles"  (nzOnCancel)="handleCancel()"
+          [nzStyle]="{ top: '20px' }"
+          [nzContent]="modalContent3" [nzTitle]="modalTitle3" [nzFooter]="modalFooter3">
+            <ng-template #modalTitle3 class="header-content">Nuevo Proceso</ng-template>
+            <form nz-form id="formcompra" [formGroup]="rolForm"
+              class="ant-advanced-search-form">
+              <ng-template #modalContent3>
+                    <nz-form-label [nzSpan]="24" nzRequired  nzFor="codigo">Codigo</nz-form-label>
+                    <nz-form-item>
+                      <nz-form-control [nzSpan]="24" nzErrorTip="el codigo es requerido" nzHasFeedback>
+                        <input type="text" (input)="convertirAMayusculas()" nz-input formControlName="rolNombre" placeholder="ingrese el apellido" />
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-label [nzSpan]="24" nzRequired nzFor="nombre">Nombre</nz-form-label>
+                    <nz-form-item>
+                      <nz-form-control [nzSpan]="24" nzErrorTip="el nombre es requerido" nzHasFeedback>
+                        <input type="text"  nz-input formControlName="nombre" placeholder="ingrese su nombre" />
+                      </nz-form-control>
+                    </nz-form-item>
+
+              </ng-template>
+              <ng-template #modalFooter3>
+                <button class="btn-default" (click)="handleCancel()">Cancelar</button>
+                <button [ngClass]="{'btn-secundary':rolForm.valid,'btn-invalid':!rolForm.valid}"
+                  (click)="handleOkRol()" [disabled]="!rolForm.valid">Guardar</button>
+
+              </ng-template>
+            </form>
+          </nz-modal>
+        </div>
+
+        </div>
+    </nz-tab>
+    <nz-tab nzTitle="Permisos">
+      <div class="content wg-white" style="padding: 20px;">
+        <div class="new_compra " style="margin-bottom: 20px;">
+          <button nz-button nzType="primary" class="btn-primary" (click)="showModal4()">
+             <span nz-icon nzType="plus" nzTheme="outline"></span> Nuevo</button>
+        </div>
+        <div class="content-datatable wg-white" >
+         <nz-divider nzPlain nzText="Lista de permisos" nzOrientation="left"></nz-divider>
+
+        <nz-table #DataPermisos [nzData]="listPermiso" class="display" nzTableLayout="fixed" [nzScroll]="{ x: '1400px', y: '240px' }">
+          <thead>
+              <tr >
+                <th nzLeft nzWidth="30px">#</th>
+                <th nzLeft nzWidth="10%">Procesos</th>
+                <th nzLeft nzWidth="13%">Rol</th>
+                <th>Dashboard</th>
+                <th>Compras</th>
+                <th>Ventas</th>
+                <th>Categorias</th>
+                <th>Productos</th>
+                <th>Inventario</th>
+                <th>Contabilidad</th>
+                <th>Usuarios</th>
+                <th>Configuracion</th>
+                <th>Proveedores</th>
+                <th>Administracion</th>
+                <th nzRight>Accion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of DataPermisos.data; index as i"  [ngClass]="{ 'odd-row': i % 2 === 0, 'even-row': i % 2 !== 0 }">
+                <td nzLeft >{{i+1}}</td>
+                <td nzLeft>{{data.proceso.nombre}}</td>
+                <td nzLeft>{{data.rol.nombre}}</td>
+                <td>{{data.dashboard?'Si':'No'}}</td>
+                <td>{{data.compras?'Si':'No'}}</td>
+                <td>{{data.ventas?'Si':'No'}}</td>
+                <td>{{data.categorias?'Si':'No'}}</td>
+                <td>{{data.productos?'Si':'No'}}</td>
+                <td>{{data.inventario?'Si':'No'}}</td>
+                <td>{{data.contabilidad?'Si':'No'}}</td>
+                <td>{{data.usuarios?'Si':'No'}}</td>
+                <td>{{data.configuracion?'Si':'No'}}</td>
+                <td>{{data.proveedores?'Si':'No'}}</td>
+                <td>{{data.administracion?'Si':'No'}}</td>
+                <td nzRight>
+                  <div  style="display: grid;grid-template-columns: 1fr 1fr 1fr;">
+                    <a (click)="editarPermiso(data)">
+                      <span style="color: green; font-size: 20px" nz-icon nzType="edit"
+                      nzTheme="outline" nzTooltipTitle="Editar" nzTooltipPlacement="left" nz-tooltip></span></a>
+                      <nz-divider nzType="vertical"></nz-divider>
+                      <a (click)="showDeleteConfirmPermiso(data.id)"><span style="color: red; font-size: 20px" nz-icon nzType="delete"
+                        nzTheme="outline" nzTooltipTitle="Eliminar" nzTooltipPlacement="right" nz-tooltip></span></a>
+                    </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </nz-table>
+        </div>
+
+    <div>
+
+      <nz-modal [(nzVisible)]="isVisiblePermiso"  (nzOnCancel)="handleCancel()"
+      [nzStyle]="{ top: '20px' }"
+      [nzContent]="modalContent4" [nzTitle]="modalTitle4" [nzFooter]="modalFooter4">
+        <ng-template #modalTitle4 class="header-content">Nuevo Proceso</ng-template>
+        <form nz-form  [formGroup]="permisoForm"
+          class="ant-advanced-search-form">
+          <ng-template #modalContent4>
+
+            <nz-form-label [nzSpan]="24"  nzRequired>Proceso</nz-form-label>
+            <nz-form-item>
+                <nz-form-control [nzSpan]="24"   nzErrorTip="Ingrese el rol" nzHasFeedback>
+                  <nz-select formControlName="proceso" nzPlaceHolder="seleccione rol" [nzSize]="size">
+                    <nz-option *ngFor="let option of listProcess" [nzLabel]="option.nombre" [nzValue]="option.id"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-label [nzSpan]="24"  nzRequired>Rol</nz-form-label>
+            <nz-form-item>
+                <nz-form-control [nzSpan]="24"   nzErrorTip="Ingrese el rol" nzHasFeedback>
+                  <nz-select formControlName="rol" nzPlaceHolder="seleccione rol" [nzSize]="size">
+                    <nz-option *ngFor="let option of listRoles" [nzLabel]="option.nombre" [nzValue]="option.id"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+             <nz-tree style="margin-top: 15px;"
+             #tree
+      [nzData]="nodes"
+      nzCheckable
+      nzMultiple
+      (nzClick)="nzEvent($event)"
+      (nzExpandChange)="nzEvent($event)"
+      (nzCheckBoxChange)="nzEvent($event)"
+    ></nz-tree>
+
+          </ng-template>
+          <ng-template #modalFooter4>
+            <button class="btn-default" (click)="handleCancel()">Cancelar</button>
+            <button [ngClass]="{'btn-secundary':permisoForm.valid,'btn-invalid':!permisoForm.valid}"
+              (click)="handleOkPermiso()" [disabled]="!permisoForm.valid">Guardar</button>
+
+          </ng-template>
+        </form>
+      </nz-modal>
+    </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+
+</div>

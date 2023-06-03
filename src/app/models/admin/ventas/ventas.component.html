@@ -1,0 +1,784 @@
+<div class="container">
+  <div class="container-dashboard">
+    <div class="fondo"></div>
+    <div class="content">
+      <div class="title"><h2>Ventas</h2></div>
+      <div class="cards_info">
+        <nz-card>
+          <nz-statistic
+            [nzValue]="'$' + (1949101 | number)!"
+            [nzTitle]="'Total de Ventas'"
+          ></nz-statistic>
+        </nz-card>
+        <nz-card>
+          <nz-statistic
+            [nzValue]="'$' + (1949101 | number)!"
+            [nzTitle]="'Total de Insumos'"
+          ></nz-statistic>
+        </nz-card>
+        <nz-card>
+          <nz-statistic
+            [nzValue]="(1949 | number)!"
+            [nzTitle]="'Cantidad Ventas'"
+          ></nz-statistic>
+        </nz-card>
+        <nz-card>
+          <nz-statistic
+            [nzValue]="'$' + (1949101 | number)!"
+            [nzTitle]="'Venta del Dia'"
+          ></nz-statistic>
+        </nz-card>
+        <nz-card>
+          <nz-statistic
+            [nzValue]="'$' + (19491 | number)!"
+            [nzTitle]="'Promedio venta'"
+          ></nz-statistic>
+        </nz-card>
+
+        <nz-card>
+          <nz-statistic
+            [nzValue]="(9.3 | number : '1.0-2')!"
+            [nzTitle]="'% diaria'"
+            [nzPrefix]="prefixTplTwo"
+            [nzSuffix]="'%'"
+            [nzValueStyle]="{ color: '#CF1322' }"
+          ></nz-statistic>
+          <ng-template #prefixTplTwo
+            ><span nz-icon nzType="arrow-down"></span
+          ></ng-template>
+        </nz-card>
+      </div>
+      <nz-tabset>
+        <nz-tab [nzTitle]="'Ventas'">
+          <ng-template #titleTemplate>
+            <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
+          </ng-template>
+          <div class="new_compra" style="margin-bottom: 20px">
+            <button
+              nz-button
+              nzType="primary"
+              class="btn-primary"
+              (click)="showModal()"
+            >
+              Nueva Venta
+            </button>
+          </div>
+          <div class="content-datatable">
+            <nz-table
+              #filterTable
+              #nestedTable
+              class="datatable-two"
+              [nzData]="listOfParentData"
+              [nzPageSize]="10"
+            >
+          <caption>Resultados todo los ventas </caption>
+
+              <thead>
+                <tr>
+                  <th scope="col" nzWidth="2.2%" ></th>
+                  <th scope="col" nzWidth="8%">ID</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Usuario</th>
+                  <th scope="col">Tipo</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Cantidad Productos</th>
+                  <th scope="col">Total Pedido</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+                  <tr>
+                    <td [(nzExpand)]="data.expand"></td>
+                    <td>12345</td>
+                    <td>{{ data.createdAt }}</td>
+                    <td>carlos garcia</td>
+                    <td>local</td>
+                    <td>
+                      Lorem ipsum dolor sit amet consectetur adipisicing Lorem
+                      ipsum dolor sit amet consectetur adipisicing
+                    </td>
+                    <td nzWidth="2.2%">3</td>
+                    <td>120000</td>
+                  </tr>
+                  <tr [nzExpand]="data.expand">
+                    <nz-table
+                      #innerTable
+                      [nzData]="listOfChildrenData"
+                      nzSize="middle"
+                      [nzShowPagination]="false"
+                    >
+                      <thead>
+                        <tr>
+                          <th scope="col" >ID</th>
+                          <th scope="col" >Productos</th>
+                          <th scope="col" >Precio</th>
+                          <th scope="col" >Cantidad</th>
+                          <th scope="col" >Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of innerTable.data">
+                          <td>1</td>
+                          <td>{{ data.date }}</td>
+                          <td>2</td>
+                          <td>12000</td>
+                          <td>24000</td>
+                        </tr>
+                      </tbody>
+                    </nz-table>
+                  </tr>
+                </ng-template>
+              </tbody>
+            </nz-table>
+          </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="'Insumos'">
+          <ng-template #titleTemplate>
+            <span nz-icon nzType="stock" nzTheme="outline"></span>
+          </ng-template>
+          <div class="new_compra" style="margin-bottom: 20px">
+            <button
+              nz-button
+              nzType="primary"
+              class="btn-primary"
+              (click)="showModalInsumos()"
+            >
+              Registrar Insumos
+            </button>
+          </div>
+          <div class="content-datatable">
+            <table class="row-border hover">
+              <caption>Lista Ventas</caption>
+              <thead>
+                <tr>
+                  <th >ID</th>
+                  <th>Nombre</th>
+                  <th>Marca</th>
+                  <th>Unidad</th>
+                  <th>Peso/Litros</th>
+                  <th>Fecha</th>
+                  <th>Cantidad</th>
+                  <th>valor</th>
+                  <th>Proveedor</th>
+                  <th>Descripcion</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Someone</td>
+                  <td>Youknow</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Iamout</td>
+                  <td>Ofinspiration</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Yoda</td>
+                  <td>Skywalker</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Patrick</td>
+                  <td>Dupont</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>Barack</td>
+                  <td>Obama</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>François</td>
+                  <td>Holland</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>Michel</td>
+                  <td>Popo</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>Chuck</td>
+                  <td>Norris</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>Simon</td>
+                  <td>Robin</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>Louis</td>
+                  <td>Lin</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td>Zelda</td>
+                  <td>Link</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                  <td>Bar</td>
+                  <td>1</td>
+                  <td>Foo</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </nz-tab>
+      </nz-tabset>
+
+      <div *ngIf="isVisible">
+        <nz-modal
+          [(nzVisible)]="isVisible"
+          (nzOnCancel)="handleCancel()"
+          (nzOnOk)="handleOk(0)"
+          [nzContent]="modalContent"
+          [nzTitle]="modalTitle"
+          nzWidth="50%"
+          [nzFooter]="modalFooter"
+        >
+          <ng-template #modalTitle class="header-content"
+            >Nueva Venta</ng-template
+          >
+          <form
+            nz-form
+            id="formcompra"
+            [formGroup]="validateForm"
+            (ngSubmit)="handleOk(0)"
+            class="ant-advanced-search-form"
+          >
+            <ng-template #modalContent>
+              <div nz-row nzGutter="24">
+                <div nz-col [nzSpan]="12">
+                  <nz-form-item>
+                    <nz-form-label nzRequired>Producto</nz-form-label>
+                    <nz-form-control
+                      nzErrorTip="Ingrese producto"
+                      nzHasFeedback
+                    >
+                      <nz-select
+                        nzShowSearch
+                        nzAllowClear
+                        formControlName="producto"
+                        nzPlaceHolder="Select OS"
+                      >
+                        <nz-option
+                          nzCustomContent
+                          nzLabel="Windows"
+                          nzValue="windows"
+                        >
+                          <span nz-icon nzType="windows"></span>
+                          Windows
+                        </nz-option>
+                        <nz-option nzCustomContent nzLabel="Mac" nzValue="mac">
+                          <span nz-icon nzType="apple"></span>
+                          Mac
+                        </nz-option>
+                        <nz-option
+                          nzCustomContent
+                          nzLabel="Android"
+                          nzValue="android"
+                        >
+                          <span nz-icon nzType="android"></span>
+                          Android
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <label for="" nzRequired> Cantidad: </label>
+                    <nz-form-control [nzSpan]="12">
+                      <nz-select formControlName="cantidad" [nzSize]="size">
+                        <nz-option
+                          *ngFor="let option of listCantidad"
+                          [nzLabel]="option.label"
+                          [nzValue]="option.value"
+                        ></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="4">
+                  <button
+                    [disabled]="validateForm.value.producto === null"
+                    [ngClass]="{
+                      'btn-secundary': validateForm.value.producto !== null,
+                      'btn-invalid': validateForm.value.producto === null
+                    }"
+                    (click)="agregarProducto()"
+                  >
+                    Agregar
+                  </button>
+                </div>
+              </div>
+              <div nz-row nzGutter="24" *ngIf="data.length > 0">
+                <nz-table
+                  style="width: 100% !important"
+                  *ngIf="data.length > 0"
+                >
+                  <thead>
+                    <tr>
+                      <th scope="col" >Producto</th>
+                      <th scope="col" >Precio</th>
+                      <th scope="col" >Cantidad</th>
+                      <th scope="col" >Accion</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of data">
+                      <ng-container
+                        *ngIf="!editCache[data.id].edit; else editTemplate"
+                      >
+                        <td nzWidth="40%">{{ data.producto }}</td>
+                        <td nzWidth="25%">{{ data.precio }}</td>
+                        <td nzWidth="15%">{{ data.cantidad }}</td>
+                        <td style="display: flex">
+                          <a (click)="editar(data.id)"
+                            ><span
+                              style="color: green; font-size: 20px"
+                              nz-icon
+                              nzType="edit"
+                              nzTheme="outline"
+                              nzTooltipTitle="Editar"
+                              nzTooltipPlacement="left"
+                              nz-tooltip
+                            ></span
+                          ></a>
+                          <nz-divider nzType="vertical"></nz-divider>
+                          <a (click)="eliminar(data.id)"
+                            ><span
+                              style="color: red; font-size: 20px"
+                              nz-icon
+                              nzType="delete"
+                              nzTheme="outline"
+                              nzTooltipTitle="Eliminar"
+                              nzTooltipPlacement="right"
+                              nz-tooltip
+                            ></span
+                          ></a>
+                        </td>
+                      </ng-container>
+                      <ng-template #editTemplate>
+                        <td>{{ editCache[data.id].data.producto }}</td>
+                        <td>${{ editCache[data.id].data.precio }}</td>
+                        <td>
+                          <input
+                            type="number"
+                            nz-input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="editCache[data.id].data.cantidad"
+                          />
+                        </td>
+                        <td style="display: flex; padding: 21px">
+                          <a (click)="saveEdit(data.id)" class="save"
+                            ><span
+                              style="color: green; font-size: 20px"
+                              nz-icon
+                              nzType="save"
+                              nzTheme="outline"
+                              nzTooltipTitle="Guardar"
+                              nzTooltipPlacement="left"
+                              nz-tooltip
+                            ></span
+                          ></a>
+                          <nz-divider nzType="vertical"></nz-divider>
+                          <a
+                            nz-popconfirm
+                            nzPopconfirmTitle="Sure to cancel?"
+                            (nzOnConfirm)="cancelEdit(data.id)"
+                            ><span
+                              nzTooltipTitle="Cancelar"
+                              nzTooltipPlacement="right"
+                              nz-tooltip
+                              style="color: gray; font-size: 20px"
+                              nz-icon
+                              nzType="close"
+                              nzTheme="outline"
+                            ></span
+                          ></a>
+                        </td>
+                      </ng-template>
+                    </tr>
+                  </tbody>
+                  <tfoot style="background: #fafafa">
+                    <tr>
+                      <td>Total</td>
+                      <td>${{ totalData.precio }}</td>
+                      <td>{{ totalData.cantidad }}</td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
+                </nz-table>
+              </div>
+              <div nz-row nzGutter="24" style="margin-top: 20px">
+                <div nz-col [nzSpan]="12">
+                  <nz-form-item>
+                    <nz-form-label *ngIf="true" [nzSpan]="6"
+                      >Descripcion</nz-form-label
+                    >
+                    <nz-form-control [nzSpan]="18" nzHasFeedback>
+                      <textarea
+                        nz-input
+                        placeholder="placeholder"
+                        formControlName="descripcion"
+                      ></textarea>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #modalFooter>
+              <button class="btn-default" (click)="handleCancel()">
+                Cancelar
+              </button>
+              <button
+                [ngClass]="{
+                  'btn-secundary': data.length > 0,
+                  'btn-invalid': data.length === 0
+                }"
+                (click)="handleOk(0)"
+                [disabled]="data.length === 0"
+              >
+                Realizar Pedido
+              </button>
+            </ng-template>
+          </form>
+        </nz-modal>
+      </div>
+      <div *ngIf="isVisibles">
+        <nz-modal
+          [(nzVisible)]="isVisibles"
+          (nzOnCancel)="handleCancel()"
+          (nzOnOk)="handleOk(1)"
+          [nzContent]="modalContent"
+          [nzTitle]="modalTitle"
+          nzWidth="70%"
+          [nzFooter]="modalFooter"
+        >
+          <ng-template #modalTitle class="header-content"
+            >Registrar Insumos</ng-template
+          >
+          <form
+            nz-form
+            id="formcompra"
+            [formGroup]="validateFormInsumos"
+            (ngSubmit)="handleOk(1)"
+            class="ant-advanced-search-form"
+          >
+            <ng-template #modalContent>
+              <div nz-row nzGutter="24">
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzRequired
+                      >Nombre</nz-form-label
+                    >
+                    <nz-form-control
+                      [nzSpan]="16"
+                      nzErrorTip="Ingrese nombre"
+                      nzHasFeedback
+                    >
+                      <input
+                        nz-input
+                        placeholder="placeholder"
+                        formControlName="nombre"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="8">Marca</nz-form-label>
+                    <nz-form-control [nzSpan]="16" nzHasFeedback>
+                      <input
+                        nz-input
+                        placeholder="placeholder"
+                        formControlName="marca"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzRequired
+                      >Unidad</nz-form-label
+                    >
+                    <nz-form-control
+                      [nzSpan]="16"
+                      nzErrorTip="Ingrese unidad"
+                      nzHasFeedback
+                    >
+                      <nz-select
+                        formControlName="unidad"
+                        [(ngModel)]="unid"
+                        (ngModelChange)="getUnd($event)"
+                        nzPlaceHolder="seleccione unidad"
+                        [nzSize]="size"
+                      >
+                        <nz-option
+                          *ngFor="let option of listOfOption"
+                          [nzLabel]="option.nombre"
+                          [nzValue]="option.id"
+                        ></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div nz-row nzGutter="24">
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label
+                      *ngIf="PesoLibra === 0"
+                      [nzSpan]="8"
+                      nzRequired
+                      >Peso</nz-form-label
+                    >
+                    <nz-form-label
+                      *ngIf="PesoLibra === 1"
+                      [nzSpan]="8"
+                      nzRequired
+                      >Litros</nz-form-label
+                    >
+                    <nz-form-control
+                      [nzSpan]="16"
+                      nzErrorTip="Ingrese peso"
+                      nzHasFeedback
+                    >
+                      <input
+                        type="number"
+                        nz-input
+                        placeholder="placeholder"
+                        formControlName="peso"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzRequired>fecha</nz-form-label>
+                    <nz-form-control
+                      [nzSpan]="16"
+                      nzErrorTip="Ingrese fecha"
+                      nzHasFeedback
+                    >
+                      <nz-date-picker formControlName="fecha"></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzRequired
+                      >cantidad</nz-form-label
+                    >
+                    <nz-form-control
+                      [nzSpan]="16"
+                      nzErrorTip="Ingrese cantidad"
+                      nzHasFeedback
+                    >
+                      <input
+                        type="number"
+                        nz-input
+                        placeholder="placeholder"
+                        formControlName="cantidad"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div nz-row nzGutter="24">
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label *ngIf="true" [nzSpan]="8" nzRequired
+                      >valor</nz-form-label
+                    >
+                    <nz-form-control
+                      [nzSpan]="16"
+                      nzErrorTip="Ingrese valor"
+                      nzHasFeedback
+                    >
+                      <input
+                        type="number"
+                        nz-input
+                        placeholder="placeholder"
+                        formControlName="valor"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="8">Proveedor</nz-form-label>
+                    <nz-form-control
+                      [nzSpan]="16"
+                      nzErrorTip="Ingrese proveedor"
+                      nzHasFeedback
+                    >
+                      <nz-select
+                        formControlName="proveedor"
+                        nzPlaceHolder="seleccione proveedor"
+                        [nzSize]="size"
+                      >
+                        <nz-option
+                          *ngFor="let option of listOfOption"
+                          [nzLabel]="option.nombre"
+                          [nzValue]="option.id"
+                        ></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzRequired>Total</nz-form-label>
+                    <nz-form-control [nzSpan]="16" nzHasFeedback>
+                      <input
+                        type="number"
+                        nz-input
+                        placeholder="placeholder"
+                        formControlName="total"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div nz-row nzGutter="12">
+                <div nz-col [nzSpan]="12">
+                  <nz-form-item>
+                    <nz-form-label *ngIf="true" [nzSpan]="6"
+                      >Descripcion</nz-form-label
+                    >
+                    <nz-form-control [nzSpan]="18" nzHasFeedback>
+                      <textarea
+                        nz-input
+                        placeholder="placeholder"
+                        formControlName="descripcion"
+                      ></textarea>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #modalFooter>
+              <button class="btn-default" (click)="handleCancel()">
+                Cancelar
+              </button>
+              <button
+                [ngClass]="{
+                  'btn-secundary': validateFormInsumos.valid,
+                  'btn-invalid': !validateFormInsumos.valid
+                }"
+                (click)="handleOk(1)"
+                [disabled]="!validateFormInsumos.valid"
+              >
+                Guardar
+              </button>
+            </ng-template>
+          </form>
+        </nz-modal>
+      </div>
+    </div>
+  </div>
+</div>

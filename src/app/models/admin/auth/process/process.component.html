@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="container_form">
+    <h2>
+      Bienvenido {{usuario}}
+    </h2>
+    <br>
+    <h3>
+      Por favor seleccione el proceso al cual quiere acceder
+    </h3>
+    <br>
+    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Seleccionar proceso" [(ngModel)]="selectedValue">
+      <nz-option nzLabel={{proces.nombre}} nzValue={{proces.id}} *ngFor="let proces of process" ></nz-option>
+    </nz-select>
+    <br>
+    <br>
+    <div class="process_btn">
+      <button class="btn-primary" (click)="submit()">ACEPTAR</button>
+    </div>
+  </div>
+  </div>

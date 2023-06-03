@@ -1,0 +1,89 @@
+<nz-layout  style="display: flex;justify-content: space-between;height: auto;" >
+  <nz-sider  class="fixed_nav "  nzCollapsible nzTheme="light" [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <div [ngClass]="{'logo':!isCollapsed,'logoNoSidebar':isCollapsed}">
+      <svg-icon src="../../../assets/icons/logoWhite.svg" [applyClass]="true"  [svgStyle]="{'width.px':60,'fill':'#fff'}">
+    </svg-icon>
+    <span>
+      Restaurante
+    </span>
+  </div>
+    <ul nz-menu  nzMode="inline" >
+      <li class="item " nz-menu-item routerLink="dashboard" [ngClass]="{'selected':path==='dashboard'}" (click)="isSelected('dashboard')">
+        <span *ngIf="!isCollapsed" nz-icon nzType="dashboard" nzTheme="outline"></span>
+        <span *ngIf="isCollapsed" nz-icon nzType="dashboard" nzTheme="outline"  nzTooltipTitle="Dashboard" nzTooltipPlacement="right"  nz-tooltip></span>
+        <span>Dashboard</span>
+      </li>
+      <li class="item" nz-menu-item routerLink="compras" [ngClass]="{'selected':path==='compras'}" (click)="isSelected('compras')">
+        <span *ngIf="!isCollapsed" nz-icon nzType="shopping" nzTheme="outline"></span>
+        <span *ngIf="isCollapsed" nz-icon nzType="shopping" nzTheme="outline"  nzTooltipTitle="Compras" nzTooltipPlacement="right"  nz-tooltip></span>
+        <span>Compras</span>
+      </li>
+      <li class="item" nz-menu-item routerLink="ventas" [ngClass]="{'selected':path==='ventas'}" (click)="isSelected('ventas')">
+        <span *ngIf="!isCollapsed" nz-icon nzType="fund-projection-screen" nzTheme="outline"></span>
+        <span *ngIf="isCollapsed" nz-icon nzType="fund-projection-screen" nzTheme="outline"  nzTooltipTitle="Ventas" nzTooltipPlacement="right"  nz-tooltip></span>
+        <span>Ventas</span>
+      </li>
+      <li class="item" nz-menu-item routerLink="categorias" [ngClass]="{'selected':path==='categorias'}" (click)="isSelected('categorias')" >
+        <span *ngIf="!isCollapsed" nz-icon nzType="group" nzTheme="outline"></span>
+        <span *ngIf="isCollapsed" nz-icon nzType="group" nzTheme="outline"  nzTooltipTitle="Categorias" nzTooltipPlacement="right"  nz-tooltip></span>
+        <span>Categorias</span>
+      </li>
+      <li class="item" nz-menu-item routerLink="productos" [ngClass]="{'selected':path==='productos'}" (click)="isSelected('productos')">
+        <span *ngIf="!isCollapsed" nz-icon nzType="profile" nzTheme="outline"></span>
+        <span *ngIf="isCollapsed" nz-icon nzType="profile" nzTheme="outline" nzTooltipTitle="Productos" nzTooltipPlacement="right"  nz-tooltip></span>
+        <span>Productos</span>
+      </li>
+      <li class="item" nz-menu-item>
+        <span *ngIf="!isCollapsed" nz-icon nzType="stock" nzTheme="outline" ></span>
+        <span *ngIf="isCollapsed" nz-icon nzType="stock" nzTheme="outline" nzTooltipTitle="Inventario" nzTooltipPlacement="right"  nz-tooltip></span>
+        <span>Inventario</span>
+      </li>
+      <li class="item" nz-menu-item>
+        <span *ngIf="!isCollapsed" nz-icon nzType="calculator" nzTheme="outline"></span>
+        <span *ngIf="isCollapsed" nz-icon nzType="calculator" nzTheme="outline" nzTooltipTitle="Contabilidad" nzTooltipPlacement="right"  nz-tooltip></span>
+        <span>Contabilidad</span>
+      </li>
+      <li class="item" nz-menu-item>
+        <span *ngIf="!isCollapsed" nz-icon nzType="team" nzTheme="outline"></span>
+        <span *ngIf="isCollapsed" nz-icon nzType="team" nzTheme="outline" nzTooltipTitle="Proveedores" nzTooltipPlacement="right"  nz-tooltip></span>
+        <span>Proveedores</span>
+      </li>
+
+      <li class="item" nz-menu-item>
+        <span *ngIf="!isCollapsed" nz-icon nzType="user-add" nzTheme="outline"></span>
+        <span *ngIf="isCollapsed" nz-icon nzType="user-add" nzTheme="outline" nzTooltipTitle="Registrar user" nzTooltipPlacement="right"  nz-tooltip></span>
+        <span>Registrar user</span>
+      </li>
+      <li class="item" nz-menu-item>
+        <span *ngIf="!isCollapsed" nz-icon nzType="setting" nzTheme="outline"></span>
+        <span *ngIf="isCollapsed" nz-icon nzType="setting" nzTheme="outline" nzTooltipTitle="Configuracion" nzTooltipPlacement="right"  nz-tooltip></span>
+        <span>Configuracion</span>
+      </li>
+
+    </ul>
+  </nz-sider>
+  <!--   -->
+  <nz-layout   >
+    <nz-header  [ngClass]="{'fixed_header_no_side':isCollapsed,'fixed_header':!isCollapsed}" >
+      <span
+        class="trigger"
+        nz-icon
+        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="collapsed()"
+      ></span>
+      <div class="navbar">
+
+        <nz-avatar nzText="U" style="color:#f56a00; background-color:#fde3cf;"> </nz-avatar>
+        <span>
+          {{username}}
+        </span>
+      </div>
+    </nz-header>
+    <nz-content   [ngClass]="{'fixed_content_no_side':isCollapsed,'fixed_content':!isCollapsed}">
+
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    </nz-layout>
+    </nz-layout>

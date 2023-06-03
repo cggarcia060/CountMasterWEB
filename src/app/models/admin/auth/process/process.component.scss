@@ -1,0 +1,45 @@
+@import "../../../../../styles/variables.scss";
+.container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  // align-items: center;
+}
+.container_form{
+
+  width: 60%;
+  height: 300px;
+  padding: 40px;
+  h2,h3{
+    color: white;
+  }
+  background:$primary;
+  box-shadow: 1px 3px  5px $sombra;
+}
+.process_btn{
+  display: flex;
+  justify-content: center;
+  button{
+    padding: 6px;
+    width: 100px;
+  }
+  button:hover{
+    background: $button-primary-light2;
+  }
+}
+nz-select {
+  width: 100%;
+  // height: 50px;
+  input{
+
+    border: 1px solid $primary;
+    box-shadow: none;
+    border-radius: 4px;
+  }
+
+}
+nz-select:focus{
+  background: none;
+border: none;
+}
