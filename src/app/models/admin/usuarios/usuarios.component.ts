@@ -12,7 +12,7 @@ import { PermisosService } from 'src/app/core/service/permisos/permisos.service'
 import { UsuariosService } from 'src/app/core/service/usuarios/usuarios.service';
 import { TokenService } from 'src/app/core/service/utils/token.service';
 import { Constant } from 'src/app/shared/utils/constant/constant';
-import { Data, DataId, IMensaje } from 'src/app/shared/utils/interfaz/interfaz';
+import { Data, DataId, IMensaje, IPermiso } from 'src/app/shared/utils/interfaz/interfaz';
 import { Usuario } from 'src/app/shared/utils/model/model';
 import { DataTableOptions } from 'src/app/shared/utils/service/utils.service';
 
@@ -26,6 +26,7 @@ export class UsuariosComponent implements OnDestroy,OnInit {
   dtOptions: DataTables.Settings ={};
   public usuarios:any;
   public proceso:any;
+  // public permisos!:IPermiso;
   dtTrigger:Subject<any> = new Subject<any>();
   public rol:any;
   public roles:any;
@@ -40,7 +41,7 @@ export class UsuariosComponent implements OnDestroy,OnInit {
 
   constructor(private fb:FormBuilder,private auth:AuthService,
     private script:ScriptionService,private message:NzMessageService,
-    private tokenService:TokenService ,private permisos:PermisosService,
+    private tokenService:TokenService ,private permisosServices:PermisosService,
     private spinner:NgxSpinnerService,private modal: NzModalService,
     private usuariosService:UsuariosService) { }
   ngOnInit() {
@@ -56,19 +57,19 @@ export class UsuariosComponent implements OnDestroy,OnInit {
 
 
 getList(proceso:any){
-  this.spinner.show();
-       this.usuariosService.getUsuarioByProcess({procesoId:proceso.id}).subscribe({
-        next:data=>{
-          this.spinner.hide();
-          this.usuarios= JSON.parse(this.script.decrypt(data.usuarios));
-          this.rerender();
-        },
-        error:err=>{
-          console.log(err);
-            this.spinner.hide();
-            this.message.error(err.error.mensaje);
-        }
-       });
+  // this.spinner.show();
+  //      this.usuariosService.getUsuarioByProcess({procesoId:proceso.id}).subscribe({
+  //       next:data=>{
+  //         this.spinner.hide();
+  //         this.usuarios= JSON.parse(this.script.decrypt(data.usuarios));
+  //         this.rerender();
+  //       },
+  //       error:err=>{
+  //         console.log(err);
+  //           this.spinner.hide();
+  //           this.message.error(err.error.mensaje);
+  //       }
+  //      });
 }
 
 validateConfirmPassword(): void {

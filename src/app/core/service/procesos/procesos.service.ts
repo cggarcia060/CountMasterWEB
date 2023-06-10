@@ -22,8 +22,8 @@ export class ProcesosService {
 
 constructor(private http:HttpClient) { }
 
-getProcesos():Observable<IProceso[]>{
-  return this.http.get<IProceso[]>(this.url+this.list);
+getProcesos(proceso:IProceso):Observable<IProceso[]>{
+  return this.http.post<IProceso[]>(this.url+this.list,proceso);
 }
 saveProceso(data:ProcesoDto):Observable<IMensaje>{
   return this.http.post<IMensaje>(this.url+this.save,data);

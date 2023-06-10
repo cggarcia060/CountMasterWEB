@@ -1,10 +1,9 @@
 <div class="container">
-
   <div class="title">
     <h2>Administracion</h2>
   </div>
   <nz-tabset nzType="editable-card" nzHideAdd  style="background-color: white !important;" >
-    <nz-tab nzTitle="Usuarios" style="color: #028ba2 !important;" >
+    <nz-tab nzTitle="Usuarios" style="color: #028ba2 !important;" *ngIf="permisos.administracion_usuarios">
       <div class="content wg-white" style="padding: 20px;">
 
         <div class="new_compra " style="margin-bottom: 20px;">
@@ -161,7 +160,7 @@
         </div>
 
     </nz-tab>
-    <nz-tab nzTitle="Proceso">
+    <nz-tab nzTitle="Proceso" style="color: #028ba2 !important;" *ngIf="permisos.administracion_proceso">
       <div class="content wg-white" style="padding: 20px;">
 
         <div class="new_compra " style="margin-bottom: 20px;">
@@ -235,7 +234,7 @@
         </div>
         </div>
     </nz-tab>
-    <nz-tab nzTitle="Roles">
+    <nz-tab nzTitle="Roles" style="color: #028ba2 !important;"  *ngIf="permisos.administracion_roles">
       <div class="content wg-white" style="padding: 20px;">
         <div class="new_compra " style="margin-bottom: 20px;">
           <button nz-button nzType="primary" class="btn-primary" (click)="showModal3()">
@@ -310,7 +309,7 @@
 
         </div>
     </nz-tab>
-    <nz-tab nzTitle="Permisos">
+    <nz-tab nzTitle="Permisos" style="color: #028ba2 !important;" *ngIf="permisos.administracion_permisos">
       <div class="content wg-white" style="padding: 20px;">
         <div class="new_compra " style="margin-bottom: 20px;">
           <button nz-button nzType="primary" class="btn-primary" (click)="showModal4()">

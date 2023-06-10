@@ -21,8 +21,8 @@ export class RolesService {
 
 constructor(private http:HttpClient) { }
 
-getRoles():Observable<IRol[]>{
-  return this.http.get<IRol[]>(this.url+this.list)
+getRoles(rol:IRol):Observable<IRol[]>{
+  return this.http.post<IRol[]>(this.url+this.list,rol)
 }
 saveRol(data:IRolDto):Observable<IMensaje>{
   return this.http.post<IMensaje>(this.url+this.save,data);

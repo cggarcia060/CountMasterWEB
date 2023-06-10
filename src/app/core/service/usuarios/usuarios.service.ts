@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Constant } from 'src/app/shared/utils/constant/constant';
-import { Data, DataId, IMensaje } from 'src/app/shared/utils/interfaz/interfaz';
+import { Data, DataId, IMensaje, IRequestContainer } from 'src/app/shared/utils/interfaz/interfaz';
 import { Usuario } from 'src/app/shared/utils/model/model';
 import { environment } from 'src/environments/environment';
 
@@ -27,7 +27,7 @@ deleteUsuario(data:DataId):Observable<IMensaje>{
 updateUsuario(data:Usuario):Observable<IMensaje>{
   return this.http.post<IMensaje>(this.url+this.update,data)
 }
-getUsuarioByProcess(data:any):Observable<any>{
+getUsuarioByProcess(data:IRequestContainer):Observable<any>{
   return this.http.post<any>(this.url+this.usuarioByprocess,data)
 }
 getUsuarioAll():Observable<any>{

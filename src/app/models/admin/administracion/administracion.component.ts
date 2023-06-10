@@ -16,7 +16,7 @@ import { RolesService } from 'src/app/core/service/roles/roles.service';
 import { UsuariosService } from 'src/app/core/service/usuarios/usuarios.service';
 import { TokenService } from 'src/app/core/service/utils/token.service';
 import { Constant } from 'src/app/shared/utils/constant/constant';
-import { IMensaje, DataId, IProceso, IRol, ProcesoDto, IPermiso, IPermisoDto } from 'src/app/shared/utils/interfaz/interfaz';
+import { IMensaje, DataId, IProceso, IRol, ProcesoDto, IPermiso, IPermisoDto, IRequestContainer } from 'src/app/shared/utils/interfaz/interfaz';
 import { Proceso, Rol, Usuario } from 'src/app/shared/utils/model/model';
 import { DataTableOptions, DataTableOptions2 } from 'src/app/shared/utils/service/utils.service';
 @Component({
@@ -49,6 +49,7 @@ export class AdministracionComponent implements OnInit {
   public size: NzSelectSizeType = 'default';
   public listProcess:IProceso[]=[];
   public listRoles:IRol[]=[];
+  public permisos!:IPermiso;
   public listPermiso:IPermiso[]=[];
   listOfSelectedValue: number[] = [];
 
@@ -65,13 +66,20 @@ export class AdministracionComponent implements OnInit {
 
   constructor(private fb:FormBuilder,private auth:AuthService,
     private script:ScriptionService,private message:NzMessageService,
-    private permisosServices:PermisosService,
+    private permisosServices:PermisosService,private tokenService:TokenService,
     private spinner:NgxSpinnerService,private modal: NzModalService,
     private usuariosService:UsuariosService,private procesoServices:ProcesosService,
     private rolServices:RolesService) { }
 
   ngOnInit() {
     this.dtOptions=DataTableOptions;
+    this.permisos=JSON.parse(this.script.decrypt(this.tokenService.getLocalStorage(Constant.COMPONENTS)));
+    console.log("compoment",this.permisos);
+
+    this.rol=this.permisos.rol;
+    this.proceso=this.permisos.proceso;
+    const Data=JSON.parse(this.script.decrypt(this.tokenService.getLocalStorage(Constant.PRP)));
+    this.roles=Data.map((data:any)=>data.rol);
     this.getList();
     this.getListProcess();
     this.getListRoles();
@@ -85,11 +93,10 @@ export class AdministracionComponent implements OnInit {
 
   }
 getListRoles(){
-  this.rolServices.getRoles().subscribe({
+  this.rolServices.getRoles(this.rol).subscribe({
     next:data=>{
       this.listRoles=data;
       console.log(this.listRoles);
-
     },
     error:err=>{
       this.message.error(err.error.mensaje);
@@ -97,7 +104,8 @@ getListRoles(){
   })
 }
 getListProcess(){
-  this.procesoServices.getProcesos().subscribe({
+  console.log(this.proceso);
+  this.procesoServices.getProcesos(this.proceso).subscribe({
     next:data=>{
       this.listProcess=data;
     },
@@ -107,8 +115,12 @@ getListProcess(){
   })
 }
 getList(){
+  const req:IRequestContainer={
+    rol:this.rol,
+    proceso:this.proceso
+  }
   this.spinner.show();
-       this.usuariosService.getUsuarioAll().subscribe({
+       this.usuariosService.getUsuarioByProcess(req).subscribe({
         next:data=>{
           this.spinner.hide();
           this.usuarios= JSON.parse(this.script.decrypt(data.usuarios));
@@ -122,11 +134,14 @@ getList(){
        });
 }
 getListPermisos(){
- this.permisosServices.getPermisosAll().subscribe({
+const req:IRequestContainer={
+  rol:this.rol,
+  proceso:this.proceso
+}
+ this.permisosServices.getPermisosByProcessAndRol(req).subscribe({
   next:data=>{
     this.listPermiso=data
     console.log(this.listPermiso);
-
   },
   error:err=>{
     this.errorData(err);

@@ -35,6 +35,7 @@ export interface IRolDto{
 export interface IPermiso extends IPermisoDto{
   id:number
 }
+
 export interface IPermisoDto  {
   proceso:IProceso;
   rol:IRol;
@@ -49,9 +50,16 @@ export interface IPermisoDto  {
   configuracion: boolean;
   proveedores: boolean;
   administracion: boolean;
-
+  administracion_proceso:boolean;
+  administracion_roles:boolean;
+  administracion_usuarios:boolean;
+  administracion_permisos:boolean;
 }
 
+export interface IRequestContainer {
+  rol:IRol,
+  proceso:IProceso
+}
 export interface Unidad {
   id:number,
   nombre:string;

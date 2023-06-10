@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Constant } from 'src/app/shared/utils/constant/constant';
-import { IMensaje, IPermiso, IPermisoDto } from 'src/app/shared/utils/interfaz/interfaz';
+import { IMensaje, IPermiso, IPermisoDto, IRequestContainer } from 'src/app/shared/utils/interfaz/interfaz';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,6 +15,7 @@ export class PermisosService {
   private permisosByProcesso='/permisos/process';
   private permisosByUsuarioByprocess='/permisos/usuarioProcess';
   private permisosAll='/permisos/listAll';
+  private permisos='/permisos/list';
   private permisoSave='/permisos/save';
   private permisoUpdate='/permisos/update';
   private permisoDelete='/permisos/delete/';
@@ -26,12 +27,16 @@ getPermisos(credenciales:any):Observable<any>{
   return this.http.post<any>(this.url+this.permisosByProcesso,credenciales)
 }
 
-getUsuarioByProcess(data:any):Observable<any>{
+getPermisosUsuarioByProcess(data:any):Observable<any>{
   return this.http.post<any>(this.url+this.permisosByUsuarioByprocess,data)
 }
 
 getPermisosAll():Observable<IPermiso[]>{
   return this.http.get<IPermiso[]>(this.url+this.permisosAll);
+}
+
+getPermisosByProcessAndRol(data:IRequestContainer):Observable<IPermiso[]>{
+  return this.http.post<IPermiso[]>(this.url+this.permisos,data);
 }
 
 savePermiso(permiso:IPermisoDto):Observable<IMensaje>{
