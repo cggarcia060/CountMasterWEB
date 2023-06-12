@@ -88,10 +88,22 @@ export class AdministracionComponent implements OnInit {
     this.createFormProcess();
     this.createFormRol();
     this.createFormPermisos();
-
-
+    this.cargarTree()
+    // this.isVisiblePermiso = true;
 
   }
+cargarTree(){
+  this.nodes=Constant.ARRAYMENU.map((data)=>{
+    let children;
+    if (data.children) {
+      children= data.children?.map(d=>{
+        return {title:d.name,key:d.key,isLeaf: true}
+      })
+    }
+    return {title:data.name,key:data.key,isLeaf: (!children?true:false),children:children}
+    })
+
+}
 getListRoles(){
   this.rolServices.getRoles(this.rol).subscribe({
     next:data=>{
@@ -212,9 +224,19 @@ handleOk(): void {
     const password= this.usuarioForm.controls['password'].value;
     const identificacion=this.usuarioForm.controls['identificacion'].value;
     console.log(this.usuarioForm.controls['roles'].value);
-    const roles= [this.usuarioForm.controls['roles'].value]
-    const procesos=this.usuarioForm.controls['procesos'].value;
-    const usuario=new Usuario(nombre,apellido,nombreUsuario,identificacion,email,password,roles,procesos,id);
+    const roles:any= this.listRoles.filter(x=>x.id==this.usuarioForm.controls['roles'].value);
+    console.log("this.usuarioForm.controls['procesos'].value ",this.usuarioForm.controls['procesos'].value);
+    const allProcess:IProceso[]=[];
+    this.usuarioForm.controls['procesos'].value.forEach((x:any)=>{
+      const proceso:IProceso|undefined=this.listProcess.find(proceso=>proceso.id==x)
+      if (proceso) {
+        allProcess.push(proceso)
+      }
+    })
+    const procesos:any=this.permisos.administracion_proceso?allProcess:[this.proceso];
+    const usuario=new Usuario(nombre,apellido,nombreUsuario,identificacion,email,this.script.encrypt(password),roles,procesos,id);
+
+    console.log("send usuarios",usuario);
 
     if(!id){
       this.auth.register(usuario).subscribe({
@@ -458,18 +480,25 @@ showDeleteConfirmRol(id:number,nombre:string): void {
 nodes:NzTreeNodeOptions[] =[];
 showModal4(): void {
   this.isVisiblePermiso = true;
-  this.nodes=Constant.ARRAYMENU.map((data)=>{
-    return {title:data.name,key:data.key,isLeaf: true}
-  })
+ this.selectedPermissions=[];
+  // this.nodes=Constant.ARRAYMENU.map((data)=>{
+  // let children;
+  // if (data.children) {
+  //   children= data.children?.map(d=>{
+  //     return {title:d.name,key:d.key,isLeaf: true}
+  //   })
+  // }
+  // return {title:data.name,key:data.key,isLeaf: (!children?true:false),children:children,expanded: true}
+  // })
+  // console.log(this.nodes);
 }
 createFormPermisos(){
   this.permisoForm = this.fb.group({
   id:[null],
   rol: [null, [Validators.required]],
-  proceso:[null, [Validators.required]],
+  proceso:[null],
   });
 }
-
 handleOkPermiso(): void {
   if (this.permisoForm.valid) {
     this.spinner.show();
@@ -478,17 +507,24 @@ handleOkPermiso(): void {
     selectedNodes.forEach(node => {
       let key:any=node.key
       data[key]= node.isChecked
+      if(node.children){
+        node.children.forEach(child=>{
+          data[child.key]=child.isChecked;
+        })
+      }
     });
-    const id=this.permisoForm.controls['id'].value;
-    if(!id){
+   console.log("data checked ->",data);
+
+   const id=this.permisoForm.controls['id'].value;
+   if(!id){
       const permisos:IPermisoDto=data;
       const rol:any= this.listRoles.find(x=>x.id==this.permisoForm.controls['rol'].value);
-        permisos.rol= rol;
-      const proceso:any= this.listProcess.find(x=>x.id==this.permisoForm.controls['proceso'].value);
-      permisos.proceso=proceso
+      permisos.rol= rol;
+      permisos.proceso=this.permisos.administracion_proceso?this.listProcess.find(x=>x.id==this.permisoForm.controls['proceso'].value):this.proceso;
+
      console.log("save ",permisos);
 
-      this.permisosServices.savePermiso(permisos).subscribe({
+     this.permisosServices.savePermiso(permisos).subscribe({
        next:data=>{
         this.spinner.hide();
         this.message.success(data.mensaje);
@@ -501,22 +537,22 @@ handleOkPermiso(): void {
     }else{
       const permisoEdit:IPermiso=data;
       const rol:any= this.listRoles.find(x=>x.id==this.permisoForm.controls['rol'].value);
-        permisoEdit.rol= rol;
-      const proceso:any= this.listProcess.find(x=>x.id==this.permisoForm.controls['proceso'].value);
-      permisoEdit.proceso=proceso
+      permisoEdit.rol= rol;
+      permisoEdit.proceso=this.permisos.administracion_proceso?this.listProcess.find(x=>x.id==this.permisoForm.controls['proceso'].value):this.proceso;
+
       permisoEdit.id=id;
       console.log("edit ",permisoEdit);
 
       this.permisosServices.updatePermiso(permisoEdit).subscribe({
         next:data=>{
-        this.spinner.hide();
+          this.spinner.hide();
         this.message.success(data.mensaje);
         this.getListPermisos();
         this.handleCancel();
-       },
+      },
        error:err=>{
-        this.errorData(err);
-       }})
+         this.errorData(err);
+        }})
     }
   }else{
     this.spinner.hide();
@@ -550,17 +586,45 @@ deletePermiso(id:number){
     }
   })
 }
+selectedPermissions!: string[];
 editarPermiso(dataPermiso:IPermiso){
+
+
   const dataEdit:any={...dataPermiso}
   this.isVisiblePermiso=true;
   const edit={id:dataEdit.id,rol:dataEdit.rol.id,proceso:dataEdit.proceso.id}
-  console.log(edit);
-
+  console.log("edit permisos ",dataEdit);
   this.permisoForm.patchValue(edit)
-  this.nodes=Constant.ARRAYMENU.map((data)=>{
-    return {title:data.name,key:data.key,isLeaf: true,checked:dataEdit[data.key]}
+
+  const array:string[]=[];
+  Constant.ARRAYMENU.map((data)=>{
+      if(dataEdit[data.key]){
+        array.push(data.key)
+      }
+      if (data.children) {
+        data.children.forEach(child=>{
+          if(dataEdit[child.key]){
+            array.push(child.key)
+          }
+        })
+      }
   })
+  console.log("array",array);
+
+  this.selectedPermissions=array
 }
+
+  //   this.nodes=Constant.ARRAYMENU.map((data)=>{
+//     let children;
+//     if (data.children) {
+//       children= data.children?.map(d=>{
+//         return {title:d.name,key:d.key,isLeaf: true,checked:dataEdit[data.key]}
+//       })
+//     }
+//     // return {title:data.name,key:data.key,isLeaf: (!children?true:false),children:children,expanded: true}
+//     return {title:data.name,key:data.key,isLeaf: (!children?true:false),children:children,expanded: true,checked:dataEdit[data.key]}
+//   })
+// }
 
 //------------
 convertirAMayusculas() {
@@ -586,7 +650,19 @@ resetForm(): void {
 }
 
 nzEvent(event: NzFormatEmitEvent): void {
-  console.log(event);
+  const checkenPermiso=[]
+  if(event.node?.origin.checked){
+
+    // event.node?.origin.children?.forEach(child=>{
+    //   this.selectedPermissions.push(child.key)
+    // })
+  }else{
+    event.node?.origin.children?.forEach(child=>{
+      this.selectedPermissions=this.selectedPermissions.filter(x=>x != child.key);
+    })
+  }
+  console.log(this.selectedPermissions);
+
   // const booleanValues: boolean[] = this.tree.getTreeNodes().map(node => node.isChecked);
 }
 // getBooleanValues(): void {

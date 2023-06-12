@@ -98,10 +98,12 @@ export class TokenService {
     const payload = token.split('.')[1];
     const payloadDecoded = window.atob(payload);
     const values = JSON.parse(payloadDecoded);
-    if (values.procesos.length <= 0) {
-      this.logOut();
+    if (values?.procesos) {
+      if (values?.procesos.length <= 0) {
+        this.logOut();
+      }
     }
-    return values.procesos
+    return values?.procesos
   }
 
 
@@ -113,8 +115,10 @@ export class TokenService {
     const payload = token.split('.')[1];
     const payloadDecoded = window.atob(payload);
     const values = JSON.parse(payloadDecoded);
-    const roles =values.roles
-    if (roles.indexOf(Constant.SUPERADMIN) < 0) {
+    const roles =values.roles[0]
+    console.log("roles",roles);
+
+    if (roles.rolNombre != Constant.SUPERADMIN) {
       return false;
     }
     return true;

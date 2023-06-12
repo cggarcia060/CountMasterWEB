@@ -23,7 +23,14 @@ export class Constant {
   {key:'contabilidad',logo:'calculator',name:'Contabilidad'},
   {key:'proveedores',logo:'team',name:'Proveedores'},
   {key:'usuarios',logo:'user-add',name:'Usuario'},
-  {key:'administracion',logo:'solution',name:'Administracion'},
+  {key:'administracion',logo:'solution',name:'Administracion',
+  children:[
+      {key:'administracion_usuarios',logo:'',name:'Usuarios'},
+      {key:'administracion_proceso',logo:'',name:'Procesos'},
+      {key:'administracion_roles',logo:'',name:'Roles'},
+      {key:'administracion_permisos',logo:'',name:'Permisos'}
+    ]
+  },
   {key:'configuracion',logo:'setting',name:'Configuracion'}
 ];
 

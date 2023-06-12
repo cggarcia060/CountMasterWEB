@@ -15,6 +15,7 @@ import { AuthorizacionGuard } from 'src/app/core/guards/authorizacion.guard';
 import { ProcessGuard } from 'src/app/core/guards/process.guard';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { AdministracionComponent } from './administracion/administracion.component';
+import { MainAuthComponent } from './auth/main-auth/main-auth.component';
 
 
 const routes: Routes = [
@@ -34,7 +35,7 @@ const routes: Routes = [
         { path: '', redirectTo: 'dashboard', pathMatch: 'full'}
     ]
   },
-  {path:'auth',component:NavAuthComponent,
+  {path:'auth',component:MainAuthComponent,
       children:[
           {path:'login',component:LoginComponent},
           {path:'process',component:ProcessComponent,canActivate:[AuthGuard,ProcessGuard]},

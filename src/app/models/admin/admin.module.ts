@@ -23,6 +23,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { DataTablesModule } from 'angular-datatables';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { AdministracionComponent } from './administracion/administracion.component';
+import { MainAuthComponent } from './auth/main-auth/main-auth.component';
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
@@ -42,8 +43,8 @@ registerLocaleData(es);
    ProcessComponent,
    SendEmailComponent,
    UsuariosComponent,
-   AdministracionComponent
-
+   AdministracionComponent,
+  MainAuthComponent
   ],
   imports: [
     CommonModule,

@@ -30,7 +30,6 @@ export class InterceptorService implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         if (err.status === 401) {
           console.log("this.tokenService.getToken() ",this.tokenService.getToken());
-
           const dto: JwtDTO = new JwtDTO( this.tokenService.getToken());
           return this.authService.refresh(dto).pipe(
             concatMap((data: any) => {
@@ -42,8 +41,11 @@ export class InterceptorService implements HttpInterceptor {
             })
           );
         } else if (err.status === 403) {
-          this.tokenService.logOut();
-          throw err;
+          if (!this.tokenService.isSuperAdmin()) {
+            this.tokenService.logOut();
+          }
+            throw err;
+
         }else if (err.status === 400) {
           throw err;
         }

@@ -1,18 +1,30 @@
-<div style="max-width: 100%;height: 100%; " >
-  <div nz-row class="auth_content" style="height: 100%;" >
-    <div nz-col nzSpan="12" class="login_img">
-      <img src="../../../../../assets/images/fondo1_400.jpg" alt="">
+<div style="height:  100%"  >
+  <div nz-row style="height: 100%;" >
+    <div nz-col nzSpan="14"  class="login_img">
+      <div class="layers">
+      <div class="title">
+        <h1 class="" >
+          <svg-icon src="../../../../../assets/icons/logoCMCompleto.svg" [applyClass]="true"  >
+          </svg-icon>
+          </h1>
+        <div >
+          <p class="" >Ingresar a la mejor experiencia.<p>
+        </div>
+      </div>
+
+      </div>
+      <!-- <img src="../../../../../assets/icons/TeamWork.svg" alt=""> -->
     </div>
-    <div nz-col nzSpan="12" class="auth_content_form">
+    <div nz-col nzSpan="10" class="auth_content_form">
       <div class="auth-form">
 
         <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
           <nz-form-item>
             <nz-form-control>
-              <h2 class="title_login">INICIAR SESION</h2>
+              <h2 class="title_login" nz-typography>Iniciar Sesion</h2>
             </nz-form-control>
           </nz-form-item>
-          <nz-form-label  nzRequired>Nombre de usuario</nz-form-label>
+          <nz-form-label   nzRequired>Nombre de usuario</nz-form-label>
           <nz-form-item >
           <nz-form-control nzErrorTip="
           ¡Por favor ingrese su nombre de usuario!">

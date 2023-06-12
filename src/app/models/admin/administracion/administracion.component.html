@@ -15,13 +15,13 @@
           <table  datatable class="table display table-bordered table-hover dt-responsive" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  >
             <thead>
               <tr style="text-align: center !important;">
-                <th>Nombre</th>
-                <th>Apellido</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
                 <th>Nombre Usuario</th>
                 <th>Identificacion</th>
                 <th>Email</th>
                 <th>Rol</th>
-                <th>Procesos</th>
+                <th *ngIf="permisos.administracion_proceso">Procesos</th>
                 <th style=" width: 70px;">Accion</th>
               </tr>
             </thead>
@@ -37,7 +37,7 @@
                       {{rol.nombre}} <br>
                   </span>
                 </td>
-                <td >
+                <td *ngIf="permisos.administracion_proceso">
                   <span *ngFor="let proceso of data.procesos">
                       {{proceso.nombre}} <br>
                   </span>
@@ -58,7 +58,6 @@
           </table>
         </div>
         <div>
-
           <nz-modal [(nzVisible)]="isVisible"  (nzOnCancel)="handleCancel()"
           [nzStyle]="{ top: '20px' }"
           [nzContent]="modalContent" [nzTitle]="modalTitle" [nzFooter]="modalFooter">
@@ -66,13 +65,13 @@
             <form nz-form id="formcompra" [formGroup]="usuarioForm"
               class="ant-advanced-search-form">
               <ng-template #modalContent>
-                    <nz-form-label [nzSpan]="24" nzRequired nzFor="nombre">Nombre</nz-form-label>
+                    <nz-form-label [nzSpan]="24" nzRequired nzFor="nombre">Nombres</nz-form-label>
                     <nz-form-item>
                       <nz-form-control [nzSpan]="24" nzErrorTip="el nombre es requerido" nzHasFeedback>
                         <input type="text" nz-input formControlName="nombre" placeholder="ingrese su nombre" />
                       </nz-form-control>
                     </nz-form-item>
-                    <nz-form-label [nzSpan]="24" nzRequired nzFor="apellido">Apellido</nz-form-label>
+                    <nz-form-label [nzSpan]="24" nzRequired nzFor="apellido">Apellidos</nz-form-label>
                     <nz-form-item>
                       <nz-form-control [nzSpan]="24" nzErrorTip="el apellido es requerido" nzHasFeedback>
                         <input type="text" nz-input formControlName="apellido" placeholder="ingrese el apellido" />
@@ -105,8 +104,8 @@
                         </ng-template>
                       </nz-form-control>
                     </nz-form-item>
-                    <nz-form-label [nzSpan]="24"  nzRequired>Procesos</nz-form-label>
-                    <nz-form-item>
+                    <nz-form-label [nzSpan]="24"  nzRequired *ngIf="permisos.administracion_proceso">Procesos</nz-form-label>
+                    <nz-form-item *ngIf="permisos.administracion_proceso">
                       <nz-form-control [nzSpan]="24"   nzErrorTip="Ingrese el rol" nzHasFeedback>
                           <nz-select nzMode="multiple" nzPlaceHolder="Inserted are removed"
                           formControlName="procesos">
@@ -160,7 +159,7 @@
         </div>
 
     </nz-tab>
-    <nz-tab nzTitle="Proceso" style="color: #028ba2 !important;" *ngIf="permisos.administracion_proceso">
+    <nz-tab nzTitle="Procesos" style="color: #028ba2 !important;" *ngIf="permisos.administracion_proceso">
       <div class="content wg-white" style="padding: 20px;">
 
         <div class="new_compra " style="margin-bottom: 20px;">
@@ -317,24 +316,27 @@
         </div>
         <div class="content-datatable wg-white" >
          <nz-divider nzPlain nzText="Lista de permisos" nzOrientation="left"></nz-divider>
-
-        <nz-table #DataPermisos [nzData]="listPermiso" class="display" nzTableLayout="fixed" [nzScroll]="{ x: '1400px', y: '240px' }">
+        <nz-table #DataPermisos [nzData]="listPermiso" class="display" nzTableLayout="fixed" [nzScroll]="{ x: '1800px', y: '240px' }">
           <thead>
               <tr >
                 <th nzLeft nzWidth="30px">#</th>
                 <th nzLeft nzWidth="10%">Procesos</th>
-                <th nzLeft nzWidth="13%">Rol</th>
-                <th>Dashboard</th>
-                <th>Compras</th>
-                <th>Ventas</th>
-                <th>Categorias</th>
-                <th>Productos</th>
-                <th>Inventario</th>
-                <th>Contabilidad</th>
-                <th>Usuarios</th>
-                <th>Configuracion</th>
-                <th>Proveedores</th>
-                <th>Administracion</th>
+                <th nzLeft nzWidth="10%">Rol</th>
+                <th *ngIf="permisos.dashboard">Dashboard</th>
+                <th *ngIf="permisos.compras">Compras</th>
+                <th *ngIf="permisos.ventas">Ventas</th>
+                <th *ngIf="permisos.categorias">Categorias</th>
+                <th *ngIf="permisos.productos">Productos</th>
+                <th *ngIf="permisos.inventario">Inventario</th>
+                <th *ngIf="permisos.contabilidad">Contabilidad</th>
+                <th *ngIf="permisos.usuarios">Usuarios</th>
+                <th *ngIf="permisos.configuracion">Configuracion</th>
+                <th *ngIf="permisos.proveedores">Proveedores</th>
+                <th *ngIf="permisos.administracion">Administracion</th>
+                <th *ngIf="permisos.administracion_usuarios">Administracion Usuarios</th>
+                <th *ngIf="permisos.administracion_proceso">Administracion Procesos</th>
+                <th *ngIf="permisos.administracion_roles">Administracion Roles</th>
+                <th *ngIf="permisos.administracion_permisos">Administracion Permisos</th>
                 <th nzRight>Accion</th>
               </tr>
             </thead>
@@ -343,17 +345,21 @@
                 <td nzLeft >{{i+1}}</td>
                 <td nzLeft>{{data.proceso.nombre}}</td>
                 <td nzLeft>{{data.rol.nombre}}</td>
-                <td>{{data.dashboard?'Si':'No'}}</td>
-                <td>{{data.compras?'Si':'No'}}</td>
-                <td>{{data.ventas?'Si':'No'}}</td>
-                <td>{{data.categorias?'Si':'No'}}</td>
-                <td>{{data.productos?'Si':'No'}}</td>
-                <td>{{data.inventario?'Si':'No'}}</td>
-                <td>{{data.contabilidad?'Si':'No'}}</td>
-                <td>{{data.usuarios?'Si':'No'}}</td>
-                <td>{{data.configuracion?'Si':'No'}}</td>
-                <td>{{data.proveedores?'Si':'No'}}</td>
-                <td>{{data.administracion?'Si':'No'}}</td>
+                <td *ngIf="permisos.dashboard">{{data.dashboard?'Si':'No'}}</td>
+                <td *ngIf="permisos.compras">{{data.compras?'Si':'No'}}</td>
+                <td *ngIf="permisos.ventas">{{data.ventas?'Si':'No'}}</td>
+                <td *ngIf="permisos.categorias">{{data.categorias?'Si':'No'}}</td>
+                <td *ngIf="permisos.productos">{{data.productos?'Si':'No'}}</td>
+                <td *ngIf="permisos.inventario">{{data.inventario?'Si':'No'}}</td>
+                <td *ngIf="permisos.contabilidad">{{data.contabilidad?'Si':'No'}}</td>
+                <td *ngIf="permisos.usuarios">{{data.usuarios?'Si':'No'}}</td>
+                <td *ngIf="permisos.configuracion">{{data.configuracion?'Si':'No'}}</td>
+                <td *ngIf="permisos.proveedores">{{data.proveedores?'Si':'No'}}</td>
+                <td *ngIf="permisos.administracion">{{data.administracion?'Si':'No'}}</td>
+                <td *ngIf="permisos.administracion_usuarios">{{data.administracion_usuarios?'Si':'No'}}</td>
+                <td *ngIf="permisos.administracion_proceso">{{data.administracion_proceso?'Si':'No'}}</td>
+                <td *ngIf="permisos.administracion_roles">{{data.administracion_roles?'Si':'No'}}</td>
+                <td *ngIf="permisos.administracion_permisos">{{data.administracion_permisos?'Si':'No'}}</td>
                 <td nzRight>
                   <div  style="display: grid;grid-template-columns: 1fr 1fr 1fr;">
                     <a (click)="editarPermiso(data)">
@@ -380,10 +386,10 @@
           class="ant-advanced-search-form">
           <ng-template #modalContent4>
 
-            <nz-form-label [nzSpan]="24"  nzRequired>Proceso</nz-form-label>
-            <nz-form-item>
-                <nz-form-control [nzSpan]="24"   nzErrorTip="Ingrese el rol" nzHasFeedback>
-                  <nz-select formControlName="proceso" nzPlaceHolder="seleccione rol" [nzSize]="size">
+            <nz-form-label *ngIf="permisos.administracion_proceso" [nzSpan]="24"  nzRequired>Proceso</nz-form-label>
+            <nz-form-item *ngIf="permisos.administracion_proceso">
+                <nz-form-control [nzSpan]="24"   nzErrorTip="Ingrese el proceso" nzHasFeedback>
+                  <nz-select formControlName="proceso" nzPlaceHolder="seleccione proceso" [nzSize]="size">
                     <nz-option *ngFor="let option of listProcess" [nzLabel]="option.nombre" [nzValue]="option.id"></nz-option>
                   </nz-select>
                 </nz-form-control>
@@ -401,9 +407,10 @@
              #tree
       [nzData]="nodes"
       nzCheckable
+      [nzCheckStrictly]="true"
       nzMultiple
+      [nzCheckedKeys]="selectedPermissions"
       (nzClick)="nzEvent($event)"
-      (nzExpandChange)="nzEvent($event)"
       (nzCheckBoxChange)="nzEvent($event)"
     ></nz-tree>
 

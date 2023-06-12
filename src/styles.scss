@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
 @import "./styles/variables.scss";
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap');
+
 // @import "~ng-zorro-antd/ng-zorro-antd.min.css";
 *,
 *::before,
@@ -20,7 +22,7 @@ body {
   font-size: 1.6rem;
   padding: 0%;
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
 background-color: $secundary;
 }
 

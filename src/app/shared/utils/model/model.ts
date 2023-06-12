@@ -1,3 +1,5 @@
+import { IProceso, IRol } from "../interfaz/interfaz";
+
 export class JsendResponse<T> {
 
 
@@ -79,9 +81,9 @@ export class Usuario{
   email:string;
   password:string;
   identificacion:number;
-  roles:number[]|any[];
-  procesos:number[];
-  constructor(nombre:string,apellido:string,nombreUsuario:string,identificacion:number,email:string,password:string,roles:number[],procesos:number[],id?:number){
+  roles:IRol[];
+  procesos:IProceso[];
+  constructor(nombre:string,apellido:string,nombreUsuario:string,identificacion:number,email:string,password:string,roles:IRol[],procesos:IProceso[],id?:number){
     this.id=id;
     this.nombre=nombre;
     this.apellido=apellido;

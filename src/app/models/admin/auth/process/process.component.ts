@@ -17,21 +17,23 @@ export class ProcessComponent implements OnInit {
   process:any;
   constructor(private tokenService:TokenService,private router:Router,
   private message: NzMessageService,
-    private permisos:PermisosService, private scription:ScriptionService) { }
+    private permisosServices:PermisosService, private scription:ScriptionService) { }
 
   ngOnInit() {
     this.usuario=this.tokenService.getUserName();
     this.process=this.tokenService.procesos();
     console.log("entro 0");
-    console.log(this.tokenService.procesos().length);
+    console.log(this.tokenService.procesos());
   }
 
   submit(){
- console.log(this.tokenService.rol())
+     console.log(this.tokenService.rol())
     this.getPermisos(this.tokenService.rol()[0].id,this.selectedValue)
   }
   private getPermisos(rol:string,proceso:string){
-    this.permisos.getPermisos({rol: this.scription.encrypt(rol),
+    console.log({rol:rol,proceso:proceso});
+
+    this.permisosServices.getPermisos({rol: this.scription.encrypt(rol),
       proceso:this.scription.encrypt(proceso)})
     .subscribe({
       next:data=>{

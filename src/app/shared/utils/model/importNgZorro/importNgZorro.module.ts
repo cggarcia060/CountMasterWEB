@@ -21,6 +21,7 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
@@ -74,7 +75,8 @@ const icons: IconDefinition[] = [MenuFoldOutline,DashboardOutline]; // agrega el
     NzToolTipModule,
     NzAvatarModule,
     NzSwitchModule,
-    NzTreeModule
+    NzTreeModule,
+    NzTypographyModule
 
 
   ],
@@ -107,7 +109,8 @@ const icons: IconDefinition[] = [MenuFoldOutline,DashboardOutline]; // agrega el
     NzToolTipModule,
     NzAvatarModule,
     NzSwitchModule,
-    NzTreeModule
+    NzTreeModule,
+    NzTypographyModule
   ],
   providers: [{ provide: NZ_I18N, useValue: es_ES },{ provide: NZ_ICONS, useValue: icons }],
 })
